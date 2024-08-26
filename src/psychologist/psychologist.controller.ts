@@ -1,9 +1,11 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Put } from '@nestjs/common'
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put, UseGuards } from '@nestjs/common'
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
 
 import { CreatePsychologistDto } from './dto/create-psychologist.dto'
 import { UpdatePsychologistDto } from './dto/update-psychologist.dto'
 import { PsychologistService } from './psychologist.service'
 
+UseGuards(JwtAuthGuard)
 @Controller('psychologist')
 export class PsychologistController {
   constructor(private readonly psychologistService: PsychologistService) {}

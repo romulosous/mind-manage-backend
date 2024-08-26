@@ -89,6 +89,7 @@ export class PsychologistService {
       where: { id: Number(id) },
       data: {
         ...updatePsychologistDto,
+        password: hashSync(updatePsychologistDto.password, 10),
       },
     })
   }

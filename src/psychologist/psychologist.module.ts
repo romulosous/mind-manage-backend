@@ -8,5 +8,6 @@ import { PsychologistService } from './psychologist.service'
   controllers: [PsychologistController],
   providers: [PsychologistService, PrismaService],
   imports: [PsychologistModule],
+  exports: [PsychologistService, PrismaService],
 })
 export class PsychologistModule {}
