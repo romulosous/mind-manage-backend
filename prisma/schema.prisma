@@ -1,0 +1,132 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Psychologist {
+  id          Int           @id @default(autoincrement())
+  name        String
+  email       String        @unique
+  password    String
+  crp         String
+  specialty   String
+  phone       String
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime?     @updatedAt
+  Patients    Patient[]
+  Appointment Appointment[]
+  Activity    Activity[]
+  Session     Session[]
+  Event       Event[]
+}
+
+model Patient {
+  id             Int           @id @default(autoincrement())
+  name           String
+  email          String        @unique
+  password       String
+  registration   String?
+  course         String?
+  age            Int
+  phone          String
+  gender         Gender
+  patientType    PatientType
+  sector         Sector?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime?     @updatedAt
+  createdBy      CreatedBy
+  psychologistId Int
+  Psychologist   Psychologist  @relation(fields: [psychologistId], references: [id])
+  Appointment    Appointment[]
+  Activity       Activity[]
+  Session        Session[]
+
+  @@index([id, psychologistId])
+}
+
+enum Gender {
+  MALE
+  FEMALE
+}
+
+enum CreatedBy {
+  PATIENT
+  PSYCHOLOGIST
+}
+
+enum Sector {
+  CLEANING
+  SECURITY
+  ADMINISTRATIVE
+  HEALTH
+  PEDAGOGICAL
+  FOOD
+}
+
+enum PatientType {
+  STUDENT
+  CONTRACTOR
+  GUARDIAN
+}
+
+model Appointment {
+  id              Int          @id @default(autoincrement())
+  psychologistId  Int
+  patientId       Int
+  appointmentDate String
+  status          String
+  reason          String?
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime?    @updatedAt
+  Psychologist    Psychologist @relation(fields: [psychologistId], references: [id])
+  Patient         Patient      @relation(fields: [patientId], references: [id])
+}
+
+model Activity {
+  id             Int            @id @default(autoincrement())
+  activityName   String
+  description    String
+  psychologistId Int
+  patientId      Int
+  status         ActivityStatus
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime?      @updatedAt
+  Psychologist   Psychologist   @relation(fields: [psychologistId], references: [id])
+  Patient        Patient        @relation(fields: [patientId], references: [id])
+}
+
+model Session {
+  id                     Int          @id @default(autoincrement())
+  psychologistId         Int
+  patientId              Int
+  sessionDate            String
+  interventionStrategies String?
+  referrals              String?
+  attachment             String?
+  createdAt              DateTime     @default(now())
+  updatedAt              DateTime?    @updatedAt
+  psychologist           Psychologist @relation(fields: [psychologistId], references: [id])
+  patient                Patient      @relation(fields: [patientId], references: [id])
+}
+
+model Event {
+  id             Int          @id @default(autoincrement())
+  eventName      String
+  description    String
+  eventDate      String
+  collaborator   String?
+  psychologistId Int
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime?    @updatedAt
+  psychologist   Psychologist @relation(fields: [psychologistId], references: [id])
+}
+
+enum ActivityStatus {
+  PENDING
+  COMPLETED
+}
