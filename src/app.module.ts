@@ -1,14 +1,14 @@
 import { Module } from '@nestjs/common'
-import { JwtService } from '@nestjs/jwt'
+import { APP_GUARD } from '@nestjs/core'
 
-import { AppController } from './app.controller'
 import { AuthModule } from './auth/auth.module'
-import { AuthService } from './auth/auth.service'
+import { JwtAuthGuard } from './auth/jwt-auth.guard'
+import { PatientModule } from './patient/patient.module'
 import { PsychologistModule } from './psychologist/psychologist.module'
 
 @Module({
-  imports: [PsychologistModule, AuthModule],
-  controllers: [AppController],
-  providers: [AuthService, JwtService],
+  imports: [PsychologistModule, PatientModule, AuthModule],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
