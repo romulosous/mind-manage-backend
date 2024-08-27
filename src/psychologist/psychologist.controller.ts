@@ -1,12 +1,12 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put, UseGuards } from '@nestjs/common'
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put, UseGuards } from '@nestjs/common'
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
 
 import { CreatePsychologistDto } from './dto/create-psychologist.dto'
 import { UpdatePsychologistDto } from './dto/update-psychologist.dto'
 import { PsychologistService } from './psychologist.service'
 
-UseGuards(JwtAuthGuard)
 @Controller('psychologist')
+@UseGuards(JwtAuthGuard)
 export class PsychologistController {
   constructor(private readonly psychologistService: PsychologistService) {}
 
@@ -28,14 +28,14 @@ export class PsychologistController {
 
   @Get(':id')
   @HttpCode(HttpStatus.FOUND)
-  async findOne(@Param('id') id: number) {
+  async findOne(@Param('id', ParseIntPipe) id: number) {
     return await this.psychologistService.findOne(Number(id))
   }
 
   @Put(':id')
   @HttpCode(HttpStatus.OK)
   async update(
-    @Param('id') id: number,
+    @Param('id', ParseIntPipe) id: number,
     @Body() updatePsychologistDto: UpdatePsychologistDto,
   ) {
     await this.psychologistService.update(id, updatePsychologistDto)
@@ -47,7 +47,7 @@ export class PsychologistController {
 
   @Delete(':id')
   @HttpCode(HttpStatus.OK)
-  async remove(@Param('id') id: number) {
+  async remove(@Param('id', ParseIntPipe) id: number) {
     await this.psychologistService.remove(id)
     return {
       message: 'PSYCHOLOGIST_REMOVED_SUCCESSFULLY',
