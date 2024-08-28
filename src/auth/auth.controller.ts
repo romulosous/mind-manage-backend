@@ -1,46 +1,24 @@
-import {
-  Body,
-  Controller,
-  Post,
-  UnauthorizedException,
-  UseGuards,
-} from '@nestjs/common'
-import { loginPatientDto } from 'src/patient/dto/login-patient'
-import { loginPsichologistDto } from 'src/psychologist/dto/login-psichologist.dto'
+import { Body, Controller, Post, UnauthorizedException } from '@nestjs/common'
+import { Response } from 'express'
 
 import { AuthService } from './auth.service'
+import { LoginDto } from './dto/login-dto'
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post('login/psichologist')
-  async loginPsichologist(@Body() loginDtoPsi: loginPsichologistDto) {
-    const psicologo = await this.authService.validateUser(
-      'psichologist',
-      loginDtoPsi.email,
-      loginDtoPsi.password,
+  @Post('login/user')
+  async loginUser(@Body() loginDto: LoginDto, res: Response) {
+    const user = await this.authService.validateUser(
+      loginDto.email,
+      loginDto.password,
     )
 
-    if (!psicologo) {
+    if (!user) {
       throw new UnauthorizedException('INVALID_CREDENTIALS')
     }
 
-    return this.authService.login(psicologo)
-  }
-
-  @Post('login/patient')
-  async loginPaciente(@Body() loginDtoPac: loginPatientDto) {
-    const paciente = await this.authService.validateUser(
-      'patient',
-      loginDtoPac.email,
-      loginDtoPac.password,
-    )
-
-    if (!paciente) {
-      throw new UnauthorizedException('INVALID_CREDENTIALS')
-    }
-
-    return this.authService.login(paciente)
+    return this.authService.login(user, res)
   }
 }
