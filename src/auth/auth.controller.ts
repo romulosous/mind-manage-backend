@@ -8,7 +8,7 @@ import { LoginDto } from './dto/login-dto'
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post('login/user')
+  @Post('login')
   async loginUser(@Body() loginDto: LoginDto, res: Response) {
     const user = await this.authService.validateUser(
       loginDto.email,
