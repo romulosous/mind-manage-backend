@@ -5,7 +5,6 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-  // directUrl = env("DIRECT_URL")
 }
 
 model Psychologist {
@@ -23,6 +22,9 @@ model Psychologist {
   Activity    Activity[]
   Session     Session[]
   Event       Event[]
+
+  @@index([email])
+  @@index([id])
 }
 
 model Patient {
@@ -41,12 +43,14 @@ model Patient {
   updatedAt      DateTime?     @updatedAt
   createdBy      CreatedBy
   psychologistId Int
+  isActive       Boolean?      @default(true)
   Psychologist   Psychologist  @relation(fields: [psychologistId], references: [id])
   Appointment    Appointment[]
   Activity       Activity[]
   Session        Session[]
 
-  @@index([id, psychologistId])
+  @@index([id])
+  @@index([email])
 }
 
 enum Gender {
@@ -79,7 +83,7 @@ model Appointment {
   psychologistId  Int
   patientId       Int
   appointmentDate String
-  status          String
+  status          Status
   reason          String?
   createdAt       DateTime     @default(now())
   updatedAt       DateTime?    @updatedAt
@@ -88,16 +92,16 @@ model Appointment {
 }
 
 model Activity {
-  id             Int            @id @default(autoincrement())
+  id             Int          @id @default(autoincrement())
   activityName   String
   description    String
   psychologistId Int
   patientId      Int
-  status         ActivityStatus
-  createdAt      DateTime       @default(now())
-  updatedAt      DateTime?      @updatedAt
-  Psychologist   Psychologist   @relation(fields: [psychologistId], references: [id])
-  Patient        Patient        @relation(fields: [patientId], references: [id])
+  status         Status
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime?    @updatedAt
+  Psychologist   Psychologist @relation(fields: [psychologistId], references: [id])
+  Patient        Patient      @relation(fields: [patientId], references: [id])
 }
 
 model Session {
@@ -126,7 +130,8 @@ model Event {
   psychologist   Psychologist @relation(fields: [psychologistId], references: [id])
 }
 
-enum ActivityStatus {
+enum Status {
   PENDING
   COMPLETED
+  DONE
 }

@@ -11,7 +11,7 @@ CREATE TYPE "Sector" AS ENUM ('CLEANING', 'SECURITY', 'ADMINISTRATIVE', 'HEALTH'
 CREATE TYPE "PatientType" AS ENUM ('STUDENT', 'CONTRACTOR', 'GUARDIAN');
 
 -- CreateEnum
-CREATE TYPE "ActivityStatus" AS ENUM ('PENDING', 'COMPLETED');
+CREATE TYPE "Status" AS ENUM ('PENDING', 'COMPLETED');
 
 -- CreateTable
 CREATE TABLE "Psychologist" (
@@ -45,6 +45,7 @@ CREATE TABLE "Patient" (
     "updatedAt" TIMESTAMP(3),
     "createdBy" "CreatedBy" NOT NULL,
     "psychologistId" INTEGER NOT NULL,
+    "isActive" BOOLEAN DEFAULT true,
 
     CONSTRAINT "Patient_pkey" PRIMARY KEY ("id")
 );
@@ -55,7 +56,7 @@ CREATE TABLE "Appointment" (
     "psychologistId" INTEGER NOT NULL,
     "patientId" INTEGER NOT NULL,
     "appointmentDate" TEXT NOT NULL,
-    "status" TEXT NOT NULL,
+    "status" "Status" NOT NULL,
     "reason" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3),
@@ -70,7 +71,7 @@ CREATE TABLE "Activity" (
     "description" TEXT NOT NULL,
     "psychologistId" INTEGER NOT NULL,
     "patientId" INTEGER NOT NULL,
-    "status" "ActivityStatus" NOT NULL,
+    "status" "Status" NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3),
 
@@ -110,10 +111,19 @@ CREATE TABLE "Event" (
 CREATE UNIQUE INDEX "Psychologist_email_key" ON "Psychologist"("email");
 
 -- CreateIndex
+CREATE INDEX "Psychologist_email_idx" ON "Psychologist"("email");
+
+-- CreateIndex
+CREATE INDEX "Psychologist_id_idx" ON "Psychologist"("id");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "Patient_email_key" ON "Patient"("email");
 
 -- CreateIndex
-CREATE INDEX "Patient_id_psychologistId_idx" ON "Patient"("id", "psychologistId");
+CREATE INDEX "Patient_id_idx" ON "Patient"("id");
+
+-- CreateIndex
+CREATE INDEX "Patient_email_idx" ON "Patient"("email");
 
 -- AddForeignKey
 ALTER TABLE "Patient" ADD CONSTRAINT "Patient_psychologistId_fkey" FOREIGN KEY ("psychologistId") REFERENCES "Psychologist"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
