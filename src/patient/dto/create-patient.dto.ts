@@ -1,5 +1,6 @@
 import { $Enums, Patient } from '@prisma/client'
 import {
+  IsBoolean,
   IsEmail,
   IsEnum,
   IsInt,
@@ -67,4 +68,7 @@ export class CreatePatientDto implements Patient {
   @IsInt()
   @IsNotEmpty()
   psychologistId: number
+  @IsBoolean()
+  @IsOptional()
+  isActive: boolean
 }

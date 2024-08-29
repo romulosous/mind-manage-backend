@@ -25,6 +25,7 @@ export class PsychologistService {
       data: {
         ...createPsychologistDto,
         password: hashSync(createPsychologistDto.password, 10),
+        updatedAt: null,
       },
     })
   }
@@ -43,7 +44,7 @@ export class PsychologistService {
       },
     })
 
-    if (!psychologistsExists.length) {
+    if (psychologistsExists.length === 0) {
       throw new HttpException('PSYCHOLOGISTS_NOT_FOUND', HttpStatus.NOT_FOUND)
     }
 

@@ -1,12 +1,17 @@
+import { Psychologist } from '@prisma/client'
 import {
   IsDate,
   IsEmail,
+  IsInt,
   IsNotEmpty,
   IsOptional,
   IsString,
 } from 'class-validator'
 
-export class CreatePsychologistDto {
+export class CreatePsychologistDto implements Psychologist {
+  @IsOptional()
+  @IsInt()
+  id: number
   @IsString()
   @IsNotEmpty()
   name: string
@@ -27,4 +32,7 @@ export class CreatePsychologistDto {
   @IsDate()
   @IsOptional()
   createdAt: Date
+  @IsDate()
+  @IsOptional()
+  updatedAt: Date
 }
