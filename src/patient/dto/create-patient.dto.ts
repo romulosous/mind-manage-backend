@@ -1,6 +1,7 @@
 import { $Enums, Patient } from '@prisma/client'
 import {
   IsBoolean,
+  IsDate,
   IsEmail,
   IsEnum,
   IsInt,
@@ -56,9 +57,11 @@ export class CreatePatientDto implements Patient {
   sector: $Enums.Sector
 
   @IsOptional()
+  @IsDate()
   createdAt: Date
 
   @IsOptional()
+  @IsDate()
   updatedAt: Date
 
   @IsEnum($Enums.CreatedBy)

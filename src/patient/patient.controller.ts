@@ -1,16 +1,4 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  HttpCode,
-  HttpStatus,
-  Param,
-  ParseIntPipe,
-  Post,
-  Put,
-  UseGuards,
-} from '@nestjs/common'
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put, Query, UseGuards } from '@nestjs/common'
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
 
 import { CreatePatientDto } from './dto/create-patient.dto'
@@ -71,4 +59,12 @@ export class PatientController {
   async findByEmail(@Body() body: { email: string }) {
     return await this.patientService.findByEmail(body.email)
   }
+
+  @Get('recent/:skip/:take')
+async findRecent(
+  @Param('skip', ParseIntPipe) skip: number,
+  @Param('take', ParseIntPipe) take: number,
+) {
+  return await this.patientService.findRecentPatients({ skip, take });
+}
 }

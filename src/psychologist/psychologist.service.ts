@@ -106,9 +106,20 @@ export class PsychologistService {
       throw new HttpException('PSYCHOLOGIST_NOT_FOUND', HttpStatus.NOT_FOUND)
     }
 
-    await this.prismaService.psychologist.delete({
-      where: { id: Number(id) },
-    })
+    await this.prismaService.$transaction([
+      this.prismaService.patient.deleteMany({
+        where: { psychologistId: Number(id) },
+      }),
+      this.prismaService.appointment.deleteMany({
+        where: { psychologistId: Number(id) },
+      }),
+      this.prismaService.activity.deleteMany({
+        where: { psychologistId: Number(id) },
+      }),
+      this.prismaService.psychologist.delete({
+        where: { id: Number(id) },
+      }),
+    ])
   }
 
   async findByEmail(email: string) {
