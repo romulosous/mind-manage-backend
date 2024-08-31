@@ -8,24 +8,39 @@ import { UpdateAppointmentDto } from './dto/update-appointment.dto'
 export class AppointmentService {
   constructor(private prismaService: PrismaService) {}
   async create(createAppointmentDto: CreateAppointmentDto) {
-    const appointmentExist = await this.prismaService.appointment.findFirst({
-      where: {
-        patientId: createAppointmentDto.patientId,
-        appointmentDate: createAppointmentDto.appointmentDate,
-      },
+    const result = await this.prismaService.$transaction(async (prisma) => {
+      const patientExist = await prisma.patient.findUnique({
+        where: {
+          id: createAppointmentDto.patientId,
+        },
+      })
+
+      if (!patientExist) {
+        throw new HttpException('PATIENT_NOT_FOUND', HttpStatus.NOT_FOUND)
+      }
+
+      const psychologistExist = await prisma.psychologist.findUnique({
+        where: {
+          id: createAppointmentDto.psychologistId,
+        },
+      })
+
+      if (!psychologistExist) {
+        throw new HttpException('PSYCHOLOGIST_NOT_FOUND', HttpStatus.NOT_FOUND)
+      }
+
+      const appointment = await prisma.appointment.create({
+        data: {
+          ...createAppointmentDto,
+          status: Status.PENDING,
+          updatedAt: null,
+        },
+      })
+
+      return appointment
     })
 
-    if (appointmentExist) {
-      throw new HttpException('APPOINTMENT_ALREADY_EXIST', HttpStatus.CONFLICT)
-    }
-
-    await this.prismaService.appointment.create({
-      data: {
-        ...createAppointmentDto,
-        updatedAt: null,
-        status: Status.PENDING,
-      },
-    })
+    return result
   }
 
   async findAll() {
