@@ -60,11 +60,13 @@ export class PatientController {
     return await this.patientService.findByEmail(body.email)
   }
 
-  @Get('recent/:skip/:take')
-async findRecent(
-  @Param('skip', ParseIntPipe) skip: number,
-  @Param('take', ParseIntPipe) take: number,
-) {
-  return await this.patientService.findRecentPatients({ skip, take });
-}
+  @Get('recent')
+  async findRecent(@Query('skip') skip: number, @Query('take') take: number) {
+    return await this.patientService.findRecentPatients({ skip, take })
+  }
+
+  @Get('search')
+  async searchByName(@Query('name') name: string) {
+    return await this.patientService.findPatientsByName(name)
+  }
 }

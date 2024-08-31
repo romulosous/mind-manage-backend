@@ -173,7 +173,7 @@ export class PatientService {
     return patientExist
   }
 
-  async findRecentPatients(params: { skip; take }) {
+  async findRecentPatients(params: { skip: number; take: number }) {
     const { skip, take } = params
     const patients = await this.prismaService.patient.findMany({
       orderBy: {
@@ -181,6 +181,46 @@ export class PatientService {
       },
       skip: skip,
       take: take,
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        age: true,
+        phone: true,
+        course: true,
+        registration: true,
+        gender: true,
+        createdAt: true,
+        updatedAt: true,
+        isActive: true,
+      },
+    })
+
+    if (!patients.length) {
+      throw new HttpException('NO_PATIENTS_FOUND', HttpStatus.NOT_FOUND)
+    }
+
+    return patients
+  }
+
+  async findPatientsByName(name: string) {
+    if (!name) {
+      throw new HttpException(
+        'Name parameter is required',
+        HttpStatus.BAD_REQUEST,
+      )
+    }
+
+    const patients = await this.prismaService.patient.findMany({
+      where: {
+        name: {
+          contains: name,
+          mode: 'insensitive',
+        },
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
       select: {
         id: true,
         name: true,
