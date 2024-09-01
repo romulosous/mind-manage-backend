@@ -1,9 +1,8 @@
+import { CreatePsychologistDto } from './dto/create-psychologist.dto'
+import { UpdatePsychologistDto } from './dto/update-psychologist.dto'
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { hashSync } from 'bcrypt'
 import { PrismaService } from 'src/prisma.service'
-
-import { CreatePsychologistDto } from './dto/create-psychologist.dto'
-import { UpdatePsychologistDto } from './dto/update-psychologist.dto'
 
 @Injectable()
 export class PsychologistService {
@@ -25,6 +24,7 @@ export class PsychologistService {
       data: {
         ...createPsychologistDto,
         password: hashSync(createPsychologistDto.password, 10),
+        createdAt: new Date().toLocaleString(),
         updatedAt: null,
       },
     })
@@ -90,7 +90,7 @@ export class PsychologistService {
       where: { id: Number(id) },
       data: {
         ...updatePsychologistDto,
-        password: hashSync(updatePsychologistDto.password, 10),
+        updatedAt: new Date().toLocaleString(),
       },
     })
   }
@@ -107,13 +107,7 @@ export class PsychologistService {
     }
 
     await this.prismaService.$transaction([
-      this.prismaService.patient.deleteMany({
-        where: { psychologistId: Number(id) },
-      }),
       this.prismaService.appointment.deleteMany({
-        where: { psychologistId: Number(id) },
-      }),
-      this.prismaService.activity.deleteMany({
         where: { psychologistId: Number(id) },
       }),
       this.prismaService.psychologist.delete({

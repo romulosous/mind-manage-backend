@@ -1,6 +1,5 @@
 import { $Enums, Appointment } from '@prisma/client'
 import {
-  IsDate,
   IsEnum,
   IsInt,
   IsNotEmpty,
@@ -9,13 +8,28 @@ import {
 } from 'class-validator'
 
 export class CreateAppointmentDto implements Appointment {
+  @IsString()
+  @IsNotEmpty()
+  name: string
+  @IsEnum($Enums.typeAcctivity)
+  @IsOptional()
+  typeAcctivity: $Enums.typeAcctivity
+  @IsEnum($Enums.typeAppointment)
+  @IsOptional()
+  type: $Enums.typeAppointment
+  @IsString()
+  @IsOptional()
+  observation: string
+  @IsOptional()
+  @IsString()
+  obejective: string
   @IsOptional()
   id: number
   @IsNotEmpty()
   @IsInt()
   psychologistId: number
   @IsInt()
-  @IsNotEmpty()
+  @IsOptional()
   patientId: number
   @IsString()
   @IsNotEmpty()
@@ -26,16 +40,10 @@ export class CreateAppointmentDto implements Appointment {
   @IsString()
   @IsNotEmpty()
   reason: string
-  @IsDate()
+  @IsString()
   @IsOptional()
-  createdAt: Date
-  @IsDate()
+  createdAt: string
+  @IsString()
   @IsOptional()
-  updatedAt: Date
-}
-
-export enum Status {
-  PENDING = 'PENDING',
-  CANCELED = 'CANCELED',
-  DONE = 'DONE',
+  updatedAt: string
 }

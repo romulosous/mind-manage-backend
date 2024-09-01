@@ -26,6 +26,16 @@ export class PatientController {
     return await this.patientService.findAll()
   }
 
+  @Get('recent')
+  async findRecent(@Query('skip') skip: number, @Query('take') take: number) {
+    return this.patientService.findRecentPatients({ skip, take })
+  }
+  
+  @Get('search')
+  async searchByName(@Query('name') name: string) {
+    return await this.patientService.findPatientsByName(name)
+  }
+
   @Get(':id')
   @HttpCode(HttpStatus.OK)
   async findOne(@Param('id', ParseIntPipe) id: number) {
@@ -58,15 +68,5 @@ export class PatientController {
   @HttpCode(HttpStatus.OK)
   async findByEmail(@Body() body: { email: string }) {
     return await this.patientService.findByEmail(body.email)
-  }
-
-  @Get('recent')
-  async findRecent(@Query('skip') skip: number, @Query('take') take: number) {
-    return await this.patientService.findRecentPatients({ skip, take })
-  }
-
-  @Get('search')
-  async searchByName(@Query('name') name: string) {
-    return await this.patientService.findPatientsByName(name)
   }
 }

@@ -10,20 +10,9 @@ export class PatientService {
   constructor(private prismaService: PrismaService) {}
   async create(createPatientDto: CreatePatientDto) {
     const result = await this.prismaService.$transaction(async (prisma) => {
-      const psychologistExist = await prisma.psychologist.findUnique({
-        where: {
-          id: createPatientDto.psychologistId,
-        },
-      })
-
-      if (!psychologistExist) {
-        throw new HttpException('PSYCHOLOGIST_NOT_FOUND', HttpStatus.NOT_FOUND)
-      }
-
       const patientExist = await prisma.patient.findFirst({
         where: {
           email: createPatientDto.email,
-          psychologistId: createPatientDto.psychologistId,
         },
       })
 
@@ -35,6 +24,7 @@ export class PatientService {
         data: {
           ...createPatientDto,
           password: hashSync(createPatientDto.password, 10),
+          createdAt: new Date().toLocaleString(),
           updatedAt: null,
         },
       })
@@ -57,10 +47,11 @@ export class PatientService {
         registration: true,
         gender: true,
         patientType: true,
-        sector: true,
         createdAt: true,
         updatedAt: true,
-        psychologistId: true,
+        isActive: true,
+        education: true,
+        series: true,
       },
     })
 
@@ -86,10 +77,8 @@ export class PatientService {
         registration: true,
         gender: true,
         patientType: true,
-        sector: true,
         createdAt: true,
         updatedAt: true,
-        psychologistId: true,
       },
     })
 
@@ -116,8 +105,7 @@ export class PatientService {
       },
       data: {
         ...updatePatientDto,
-        password: hashSync(updatePatientDto.password, 10),
-        updatedAt: new Date(),
+        updatedAt: new Date().toLocaleString(),
       },
     })
   }
@@ -134,12 +122,6 @@ export class PatientService {
     }
 
     await this.prismaService.$transaction(async (prisma) => {
-      await prisma.activity.deleteMany({
-        where: {
-          patientId: id,
-        },
-      })
-
       await prisma.appointment.deleteMany({
         where: {
           patientId: id,
@@ -147,6 +129,11 @@ export class PatientService {
       })
 
       await this.prismaService.session.deleteMany({
+        where: {
+          patientId: id,
+        },
+      })
+      await this.prismaService.appointment.deleteMany({
         where: {
           patientId: id,
         },
@@ -237,7 +224,10 @@ export class PatientService {
     })
 
     if (!patients.length) {
-      throw new HttpException('NO_PATIENTS_FOUND', HttpStatus.NOT_FOUND)
+      throw new HttpException(
+        `PATIENT_NOT_FOUND_WITH_NAME: ${name}`,
+        HttpStatus.NOT_FOUND,
+      )
     }
 
     return patients
