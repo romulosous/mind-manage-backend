@@ -15,41 +15,38 @@ model Psychologist {
   crp         String
   specialty   String
   phone       String
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime?     @updatedAt
-  Patients    Patient[]
+  createdAt   String
+  updatedAt   String?
   Appointment Appointment[]
-  Activity    Activity[]
   Session     Session[]
-  Event       Event[]
 
   @@index([email])
   @@index([id])
 }
 
 model Patient {
-  id             Int           @id @default(autoincrement())
-  name           String
-  email          String        @unique
-  password       String
-  registration   String?
-  course         String?
-  age            Int
-  phone          String
-  gender         Gender
-  patientType    PatientType
-  sector         Sector?
-  createdAt      DateTime      @default(now())
-  updatedAt      DateTime?     @updatedAt
-  createdBy      CreatedBy
-  psychologistId Int
-  isActive       Boolean?      @default(true)
-  Psychologist   Psychologist  @relation(fields: [psychologistId], references: [id])
-  Appointment    Appointment[]
-  Activity       Activity[]
-  Session        Session[]
+  id           Int           @id @default(autoincrement())
+  name         String
+  email        String        @unique
+  password     String
+  registration String?
+  course       Courses?
+  education    Education?
+  age          Int
+  phone        String
+  gender       Gender
+  patientType  PatientType
+  series       String?
+  createdAt    String
+  updatedAt    String?
+  createdBy    CreatedBy
+  isActive     Boolean?      @default(true)
+  Appointment  Appointment[]
+  Session      Session[]
+  Anamenese    Anamenese[]
 
   @@index([id])
+  @@index([isActive])
   @@index([email])
 }
 
@@ -63,75 +60,141 @@ enum CreatedBy {
   PSYCHOLOGIST
 }
 
-enum Sector {
-  CLEANING
-  SECURITY
-  ADMINISTRATIVE
-  HEALTH
-  PEDAGOGICAL
-  FOOD
+enum Education {
+  MEDIO
+  SUPERIOR
+  POS_GRADUACAO
+  TECNICO
+  MESTRADO
+}
+
+enum Courses {
+  FISICA
+  QUIMICA
+  ADS
+  ELETROTECNICA
+  ADMINISTRACAO
+  INFORMATICA
 }
 
 enum PatientType {
   STUDENT
   CONTRACTOR
   GUARDIAN
+  TEACHER
 }
 
 model Appointment {
-  id              Int          @id @default(autoincrement())
+  id              Int              @id @default(autoincrement())
   psychologistId  Int
-  patientId       Int
+  patientId       Int?
   appointmentDate String
-  status          Status
+  status          Status           @default(PENDING)
   reason          String?
-  createdAt       DateTime     @default(now())
-  updatedAt       DateTime?    @updatedAt
-  Psychologist    Psychologist @relation(fields: [psychologistId], references: [id])
-  Patient         Patient      @relation(fields: [patientId], references: [id])
+  name            String?
+  typeAcctivity   typeAcctivity?
+  type            typeAppointment?
+  observation     String?
+  obejective      String?
+  createdAt       String
+  updatedAt       String?
+  Psychologist    Psychologist     @relation(fields: [psychologistId], references: [id])
+  Patient         Patient?         @relation(fields: [patientId], references: [id])
+
+  @@index([status])
+  @@index([type])
 }
 
-model Activity {
-  id             Int          @id @default(autoincrement())
-  activityName   String
-  description    String
-  psychologistId Int
-  patientId      Int
-  status         Status
-  createdAt      DateTime     @default(now())
-  updatedAt      DateTime?    @updatedAt
-  Psychologist   Psychologist @relation(fields: [psychologistId], references: [id])
-  Patient        Patient      @relation(fields: [patientId], references: [id])
+enum typeAppointment {
+  SESSION
+  COLLECTIVE_ACTIVITIES
+  ADMINISTRATIVE_RECORDS
 }
 
-model Session {
-  id                     Int          @id @default(autoincrement())
-  psychologistId         Int
-  patientId              Int
-  sessionDate            String
-  interventionStrategies String?
-  referrals              String?
-  attachment             String?
-  createdAt              DateTime     @default(now())
-  updatedAt              DateTime?    @updatedAt
-  psychologist           Psychologist @relation(fields: [psychologistId], references: [id])
-  patient                Patient      @relation(fields: [patientId], references: [id])
-}
-
-model Event {
-  id             Int          @id @default(autoincrement())
-  eventName      String
-  description    String
-  eventDate      String
-  collaborator   String?
-  psychologistId Int
-  createdAt      DateTime     @default(now())
-  updatedAt      DateTime?    @updatedAt
-  psychologist   Psychologist @relation(fields: [psychologistId], references: [id])
+enum typeAcctivity {
+  GROUP
+  LECTURE
+  SEMINAR
+  MEETING
+  DISCUSSION_CIRCLE
 }
 
 enum Status {
   PENDING
-  COMPLETED
-  DONE
+  CONFIRMED
+  FINALIZED
+  CANCELED
+  ABSENCE
+}
+
+model Session {
+  id                    Int                    @id @default(autoincrement())
+  psychologistId        Int
+  patientId             Int
+  sessionDate           String
+  intervention          String?
+  referrals             String?
+  attachment            String?
+  complaint             String?
+  psychologicalDisorder psychologicalDisorder?
+  difficulty            String?
+  relationship          Relationship?
+  createdAt             String
+  updatedAt             String?
+  psychologist          Psychologist           @relation(fields: [psychologistId], references: [id])
+  patient               Patient                @relation(fields: [patientId], references: [id])
+
+  @@index([psychologicalDisorder])
+  @@index([relationship])
+}
+
+enum Difficulty {
+  AVALIATION
+  ORGANIZATION
+  CONCENTRATION
+  MEMORY
+  TDAH
+  COMUNICATION
+}
+
+enum psychologicalDisorder {
+  DEPRESSION
+  GENERALIZED_ANXIETY
+  BIPOLAR_DISORDER
+  BORDERLINE_PERSONALITY_DISORDER
+  SCHIZOPHRENIA
+  OBSESSIVE_COMPULSIVE_DISORDER
+  POST_TRAUMATIC_STRESS_DISORDER
+  ATTENTION_DEFICIT_HYPERACTIVITY_DISORDER
+  AUTISM_SPECTRUM_DISORDER
+  EATING_DISORDER
+  SUBSTANCE_ABUSE
+  PERSONALITY_DISORDER
+  DISSOCIATIVE_DISORDER
+  BODY_DYSMORPHIC_DISORDER
+  PARANOID_DISORDER
+  PANIC_DISORDER
+  PSYCHOSIS
+  OTHER
+}
+
+enum Relationship {
+  RELATIONSHIP_WITH_COLLEAGUES
+  RELATIONSHIP_WITH_FAMILY
+  RELATIONSHIP_WITH_PARTNER
+  RELATIONSHIP_WITH_TEACHER
+  OTHER
+}
+
+model Anamenese {
+  id            Int     @id @default(autoincrement())
+  patientId     Int
+  familyHistory String?
+  infancy       String?
+  adolescence   String?
+  illnesses     String?
+  acompaniment  String?
+  createdAt     String
+  updatedAt     String?
+  Patient       Patient @relation(fields: [patientId], references: [id])
 }

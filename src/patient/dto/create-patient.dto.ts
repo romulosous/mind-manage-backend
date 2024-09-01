@@ -1,7 +1,6 @@
 import { $Enums, Patient } from '@prisma/client'
 import {
   IsBoolean,
-  IsDate,
   IsEmail,
   IsEnum,
   IsInt,
@@ -19,58 +18,45 @@ export class CreatePatientDto implements Patient {
   @IsString()
   @IsNotEmpty()
   name: string
-
   @IsEmail()
   @IsNotEmpty()
   email: string
-
   @IsStrongPassword()
   @IsNotEmpty()
   password: string
-
   @IsString()
   @IsOptional()
   registration: string
-
-  @IsString()
+  @IsEnum($Enums.Courses)
   @IsOptional()
-  course: string
-
+  course: $Enums.Courses
+  @IsEnum($Enums.Education)
+  @IsOptional()
+  education: $Enums.Education
   @IsInt()
   @IsNotEmpty()
   age: number
-
   @IsPhoneNumber('BR')
-  @IsOptional()
+  @IsNotEmpty()
   phone: string
-
   @IsEnum($Enums.Gender)
-  @IsNotEmpty()
+  @IsOptional()
   gender: $Enums.Gender
-
   @IsEnum($Enums.PatientType)
-  @IsNotEmpty()
+  @IsOptional()
   patientType: $Enums.PatientType
-
-  @IsEnum($Enums.Sector)
+  @IsString()
   @IsOptional()
-  sector: $Enums.Sector
-
+  series: string
+  @IsString()
   @IsOptional()
-  @IsDate()
-  createdAt: Date
-
+  createdAt: string
+  @IsString()
   @IsOptional()
-  @IsDate()
-  updatedAt: Date
-
+  updatedAt: string
   @IsEnum($Enums.CreatedBy)
-  @IsNotEmpty()
+  @IsOptional()
   createdBy: $Enums.CreatedBy
-
-  @IsInt()
-  @IsNotEmpty()
-  psychologistId: number
   @IsBoolean()
   @IsOptional()
   isActive: boolean
