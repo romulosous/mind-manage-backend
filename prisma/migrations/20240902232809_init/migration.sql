@@ -5,9 +5,6 @@ CREATE TYPE "Gender" AS ENUM ('MALE', 'FEMALE');
 CREATE TYPE "CreatedBy" AS ENUM ('PATIENT', 'PSYCHOLOGIST');
 
 -- CreateEnum
-CREATE TYPE "Sector" AS ENUM ('CLEANING', 'SECURITY', 'ADMINISTRATIVE', 'HEALTH', 'PEDAGOGICAL', 'FOOD');
-
--- CreateEnum
 CREATE TYPE "Education" AS ENUM ('MEDIO', 'SUPERIOR', 'POS_GRADUACAO', 'TECNICO', 'MESTRADO');
 
 -- CreateEnum
@@ -77,7 +74,7 @@ CREATE TABLE "Appointment" (
     "psychologistId" INTEGER NOT NULL,
     "patientId" INTEGER,
     "appointmentDate" TEXT NOT NULL,
-    "status" "Status" NOT NULL,
+    "status" "Status" NOT NULL DEFAULT 'PENDING',
     "reason" TEXT,
     "name" TEXT,
     "typeAcctivity" "typeAcctivity",
