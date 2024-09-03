@@ -27,10 +27,10 @@ export class PatientController {
   }
 
   @Get('recent')
-  async findRecent(@Query('skip') skip: number, @Query('take') take: number) {
+  async findRecent(@Query('skip') skip?: number, @Query('take') take?: number) {
     return this.patientService.findRecentPatients({ skip, take })
   }
-  
+
   @Get('search')
   async searchByName(@Query('name') name: string) {
     return await this.patientService.findPatientsByName(name)

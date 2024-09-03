@@ -91,6 +91,7 @@ export class PsychologistService {
       data: {
         ...updatePsychologistDto,
         updatedAt: new Date().toLocaleString(),
+        password: hashSync(updatePsychologistDto.password, 10),
       },
     })
   }

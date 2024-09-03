@@ -3,7 +3,6 @@ import {
   Controller,
   Delete,
   Get,
-  HttpCode,
   HttpStatus,
   Param,
   ParseIntPipe,
@@ -23,7 +22,6 @@ export class PsychologistController {
   constructor(private readonly psychologistService: PsychologistService) {}
 
   @Post()
-  @HttpCode(HttpStatus.CREATED)
   async create(@Body() createPsychologistDto: CreatePsychologistDto) {
     await this.psychologistService.create(createPsychologistDto)
     return {
@@ -33,19 +31,16 @@ export class PsychologistController {
   }
 
   @Get()
-  @HttpCode(HttpStatus.FOUND)
   async findAll() {
     return await this.psychologistService.findAll()
   }
 
   @Get(':id')
-  @HttpCode(HttpStatus.FOUND)
   async findOne(@Param('id', ParseIntPipe) id: number) {
     return await this.psychologistService.findOne(Number(id))
   }
 
   @Put(':id')
-  @HttpCode(HttpStatus.OK)
   async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updatePsychologistDto: UpdatePsychologistDto,
@@ -58,7 +53,6 @@ export class PsychologistController {
   }
 
   @Delete(':id')
-  @HttpCode(HttpStatus.OK)
   async remove(@Param('id', ParseIntPipe) id: number) {
     await this.psychologistService.remove(id)
     return {
@@ -68,7 +62,6 @@ export class PsychologistController {
   }
 
   @Post('/email')
-  @HttpCode(HttpStatus.FOUND)
   async findByEmail(@Body('email') email: string) {
     return await this.psychologistService.findByEmail(email)
   }

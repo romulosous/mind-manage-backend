@@ -52,6 +52,18 @@ export class PatientService {
         isActive: true,
         education: true,
         series: true,
+        Anamenese: {
+          take: 5,
+          orderBy: {
+            createdAt: 'desc',
+          },
+        },
+        Session: {
+          take: 5,
+          orderBy: {
+            createdAt: 'desc',
+          },
+        },
       },
     })
 
@@ -133,11 +145,6 @@ export class PatientService {
           patientId: id,
         },
       })
-      await this.prismaService.appointment.deleteMany({
-        where: {
-          patientId: id,
-        },
-      })
       await prisma.patient.delete({
         where: {
           id,
@@ -160,14 +167,14 @@ export class PatientService {
     return patientExist
   }
 
-  async findRecentPatients(params: { skip: number; take: number }) {
+  async findRecentPatients(params: { skip?: number; take?: number }) {
     const { skip, take } = params
     const patients = await this.prismaService.patient.findMany({
       orderBy: {
         createdAt: 'desc',
       },
       skip: skip,
-      take: take,
+      take: take < 10 ? 10 : take,
       select: {
         id: true,
         name: true,
