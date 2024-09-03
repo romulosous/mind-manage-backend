@@ -1,18 +1,8 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  HttpStatus,
-  Param,
-  ParseIntPipe,
-  Post,
-  Put,
-  Query,
-} from '@nestjs/common'
+import { Body, Controller, Delete, Get, HttpStatus, Param, ParseIntPipe, Post, Put, Query } from '@nestjs/common'
 
 import { AppointmentService } from './appointment.service'
 import { CreateAppointmentDto } from './dto/create-appointment.dto'
+import { SearchAppointment } from './dto/filterAppointment'
 import { UpdateAppointmentDto } from './dto/update-appointment.dto'
 
 @Controller('appointment')
@@ -28,21 +18,9 @@ export class AppointmentController {
     }
   }
 
-  @Get('recentAppointments')
-  async getRecentAppointments(
-    @Query('date') date: string = '01/09/2024',
-    @Query('offset', ParseIntPipe) offset?: number,
-    @Query('limit', ParseIntPipe) limit?: number,
-  ) {
-    return await this.appointmentService.getAppointmentsForDayRange(
-      date,
-      offset,
-      limit,
-    )
-  }
   @Get()
-  async findAll() {
-    return await this.appointmentService.findAll()
+  async searchAppointment(@Query() filter: SearchAppointment) {
+    return await this.appointmentService.searchAppointment(filter)
   }
 
   @Get(':id')

@@ -1,9 +1,12 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
+import { Prisma } from '@prisma/client'
 import { PrismaService } from 'src/prisma.service'
 
+import { StatusApointment } from '../appointment/dto/Enum'
 import { CreateAppointmentDto } from './dto/create-appointment.dto'
+import { typeAppointment } from './dto/Enum'
+import { SearchAppointment } from './dto/filterAppointment'
 import { UpdateAppointmentDto } from './dto/update-appointment.dto'
-import { log } from 'console'
 
 @Injectable()
 export class AppointmentService {
@@ -38,7 +41,7 @@ export class AppointmentService {
         data: {
           ...createAppointmentDto,
           updatedAt: null,
-          createdAt: new Date().toLocaleString(),
+          createdAt: new Date().toLocaleString(), // 03/09/2024, 13:38
           patientId:
             createAppointmentDto.type === 'SESSION'
               ? createAppointmentDto.patientId
@@ -52,8 +55,48 @@ export class AppointmentService {
     return result
   }
 
-  async findAll() {
-    const appointments = await this.prismaService.appointment.findMany()
+  private buildFiltersQuery(
+    filter: SearchAppointment,
+  ): Prisma.AppointmentWhereInput {
+    const filters: Prisma.AppointmentWhereInput = {}
+
+    if (filter.type) {
+      filters.type = filter.type as typeAppointment
+    }
+
+    if (filter.status) {
+      filters.status = filter.status as StatusApointment
+    }
+
+    if (filter.appointmentDate) {
+      const [day, month, year] = filter.appointmentDate.split('/').map(Number)
+
+      const startOfDay = `${String(day - 1).padStart(2, '0')}/${String(month).padStart(2, '0')}/${year}, 00:00:00`
+      const endOfDay = `${String(day + 1).padStart(2, '0')}/${String(month).padStart(2, '0')}/${year}, 23:59:59`
+
+      filters.appointmentDate = {
+        gte: startOfDay,
+        lte: endOfDay,
+      }
+    }
+
+    return filters
+  }
+
+  async searchAppointment(filter: SearchAppointment) {
+    const filters = this.buildFiltersQuery(filter)
+
+    const limit =
+      filter.limit && filter.limit > 0 && filter.limit <= 10 ? filter.limit : 10
+
+    const appointments = await this.prismaService.appointment.findMany({
+      where: filters,
+      orderBy: {
+        createdAt: 'desc',
+      },
+      skip: filter.offset ? Number(filter.offset) : 0,
+      take: Number(limit),
+    })
 
     if (!appointments.length) {
       throw new HttpException('APPOINTMENTS_NOT_FOUND', HttpStatus.NOT_FOUND)
@@ -101,33 +144,5 @@ export class AppointmentService {
     await this.prismaService.appointment.delete({
       where: { id: Number(id) },
     })
-  }
-
-  async getAppointmentsForDayRange(
-    date: string,
-    daysOffset: number = 0,
-    limit: number = 10,
-  ) {
-    const [day, month, year] = date.split('/').map(Number)
-
-    const selectedDate = new Date(year, month - 1, day)
-
-    const previousDate = new Date(selectedDate)
-    previousDate.setDate(selectedDate.getDate() - 1)
-    const previousDateString = `${String(previousDate.getDate()).padStart(2, '0')}/${String(previousDate.getMonth() + 1).padStart(2, '0')}/${previousDate.getFullYear()}`
-
-    const nextDate = new Date(selectedDate)
-    nextDate.setDate(selectedDate.getDate() + 1)
-    const nextDateString = `${String(nextDate.getDate()).padStart(2, '0')}/${String(nextDate.getMonth() + 1).padStart(2, '0')}/${nextDate.getFullYear()}`
-
-    const appointments = await this.prismaService.$queryRaw`
-      SELECT "id", "psychologistId", "patientId", "appointmentDate", "status", "reason", "name", "typeAcctivity", "type", "observation", "obejective", "createdAt", "updatedAt"
-      FROM "public"."Appointment"
-      WHERE "appointmentDate" LIKE ${previousDateString} || '%'
-      OR "appointmentDate" LIKE ${date} || '%'
-      OR "appointmentDate" LIKE ${nextDateString} || '%'
-      ORDER BY "appointmentDate" DESC
-      LIMIT ${limit} OFFSET ${daysOffset};`
-    return appointments
   }
 }
