@@ -1,9 +1,22 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put, Query, UseGuards } from '@nestjs/common'
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
-
 import { CreatePatientDto } from './dto/create-patient.dto'
+import { SearchPatient } from './dto/filterPatient'
 import { UpdatePatientDto } from './dto/update-patient.dto'
 import { PatientService } from './patient.service'
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  ParseIntPipe,
+  Post,
+  Put,
+  Query,
+  UseGuards,
+} from '@nestjs/common'
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
 
 @Controller('patient')
 // @UseGuards(JwtAuthGuard)
@@ -11,7 +24,6 @@ export class PatientController {
   constructor(private readonly patientService: PatientService) {}
 
   @Post()
-  @HttpCode(HttpStatus.CREATED)
   async create(@Body() createPatientDto: CreatePatientDto) {
     await this.patientService.create(createPatientDto)
     return {
@@ -21,25 +33,8 @@ export class PatientController {
   }
 
   @Get()
-  @HttpCode(HttpStatus.OK)
-  async findAll() {
-    return await this.patientService.findAll()
-  }
-
-  @Get('recent')
-  async findRecent(@Query('skip') skip?: number, @Query('take') take?: number) {
-    return this.patientService.findRecentPatients({ skip, take })
-  }
-
-  @Get('search')
-  async searchByName(@Query('name') name: string) {
-    return await this.patientService.findPatientsByName(name)
-  }
-
-  @Get(':id')
-  @HttpCode(HttpStatus.OK)
-  async findOne(@Param('id', ParseIntPipe) id: number) {
-    return await this.patientService.findOne(id)
+  async search(@Query() filter: SearchPatient) {
+    return await this.patientService.searchPatients(filter)
   }
 
   @Put(':id')
