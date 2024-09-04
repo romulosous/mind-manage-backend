@@ -2,7 +2,12 @@ import { Session } from '@prisma/client'
 
 type FilterSession = Pick<
   Session,
-  'relationship' | 'difficulty' | 'psychologicalDisorder'
+  | 'relationship'
+  | 'difficulty'
+  | 'psychologicalDisorder'
+  | 'psychologistId'
+  | 'patientId'
+  | 'id'
 > & {
   limit?: number
   offset?: number
