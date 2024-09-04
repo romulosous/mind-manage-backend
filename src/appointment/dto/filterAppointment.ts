@@ -1,24 +1,14 @@
-import { StatusApointment, typeAppointment } from './Enum'
-
-type Appointment = {
-  id: number
-  psychologistId: number
-  patientId: number
-  appointmentDate: string
-  status: StatusApointment
-  reason: string
-  name: string
-  typeAcctivity: typeAppointment
-  type: string
-  observation: string
-  obejective: string
-  createdAt: string
-  updatedAt: string
-}
+import { Appointment } from '@prisma/client'
 
 type FilterAppointment = Pick<
   Appointment,
-  'type' | 'status' | 'appointmentDate'
+  | 'type'
+  | 'status'
+  | 'appointmentDate'
+  | 'typeAcctivity'
+  | 'patientId'
+  | 'psychologistId'
+  | 'name'
 > & {
   offset?: number
   limit?: number
