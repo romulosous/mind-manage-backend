@@ -1,3 +1,6 @@
+import { CreatePsychologistDto } from './dto/create-psychologist.dto'
+import { UpdatePsychologistDto } from './dto/update-psychologist.dto'
+import { PsychologistService } from './psychologist.service'
 import {
   Body,
   Controller,
@@ -12,12 +15,8 @@ import {
 } from '@nestjs/common'
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
 
-import { CreatePsychologistDto } from './dto/create-psychologist.dto'
-import { UpdatePsychologistDto } from './dto/update-psychologist.dto'
-import { PsychologistService } from './psychologist.service'
-
 @Controller('psychologist')
-// @UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard)
 export class PsychologistController {
   constructor(private readonly psychologistService: PsychologistService) {}
 

@@ -27,17 +27,14 @@ export class AuthService {
     if (psychologist && compareSync(password, psychologist.password)) {
       user = psychologist
       role = AuthType.PSYCHOLOGIST
+      return { ...user, role }
     } else if (patient && compareSync(password, patient.password)) {
       user = patient
       role = AuthType.PATIENT
+      return { ...user, role }
     }
 
-    if (user && role) {
-      const { password, ...result } = user
-      return { ...result, role }
-    }
-
-    return null
+    throw new UnauthorizedException('INVALID_CREDENTIALS')
   }
 
   async login(user: any, @Res() res: Response) {
@@ -56,14 +53,13 @@ export class AuthService {
     res.cookie('access_token', access_token, {
       httpOnly: true,
       sameSite: 'strict',
-      // expire in 1 minute
       expires: new Date(Date.now() + 900000),
     })
 
     res.cookie('refresh_token', refresh_token, {
       httpOnly: true,
       sameSite: 'strict',
-      expires: new Date(Date.now() + 604800000), // 7 days
+      expires: new Date(Date.now() + 604800000),
     })
 
     return res.send({ access_token, refresh_token })
@@ -77,12 +73,10 @@ export class AuthService {
     }
 
     try {
-      // Verify and decode the refresh token
       const decoded = this.jwtService.verify(refreshToken, {
         secret: process.env.JWT_SECRET,
       })
 
-      // Generate new access token
       const payload = {
         email: decoded.email,
         sub: decoded.sub,
@@ -93,11 +87,10 @@ export class AuthService {
         secret: process.env.JWT_SECRET,
       })
 
-      // Set new cookie with access token
       res.cookie('access_token', newAccessToken, {
         httpOnly: true,
         sameSite: 'strict',
-        expires: new Date(Date.now() + 900000), // 15 minutes
+        expires: new Date(Date.now() + 900000),
       })
 
       return res.send({ access_token: newAccessToken })

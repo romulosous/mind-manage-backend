@@ -48,18 +48,15 @@ export class PatientService {
 
   async create(createPatientDto: CreatePatientDto) {
     await this.checkPatientExists(createPatientDto.email)
-    const result = await this.prismaService.$transaction(async (prisma) => {
-      const patient = await prisma.patient.create({
-        data: {
-          ...createPatientDto,
-          password: hashSync(createPatientDto.password, 10),
-          createdAt: new Date().toLocaleString(),
-          updatedAt: null,
-        },
-      })
-      return patient
+
+    await this.prismaService.patient.create({
+      data: {
+        ...createPatientDto,
+        password: hashSync(createPatientDto.password, 10),
+        createdAt: new Date().toLocaleString(),
+        updatedAt: null,
+      },
     })
-    return result
   }
 
   async searchPatients(filter: SearchPatient) {
@@ -104,56 +101,16 @@ export class PatientService {
   async findByEmail(email: string) {
     const patient = await this.prismaService.patient.findUnique({
       where: { email },
-      select: this.patientSelect,
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        password: true,
+      },
     })
     if (!patient) {
       throw new HttpException('PATIENT_NOT_FOUND', HttpStatus.NOT_FOUND)
     }
     return patient
-  }
-
-  async findRecentPatients(params: { skip?: number; take?: number }) {
-    const { skip, take } = params
-    const patients = await this.prismaService.patient.findMany({
-      orderBy: { createdAt: 'desc' },
-      skip: skip,
-      take: take < 10 ? 10 : take,
-      select: this.patientSelect,
-    })
-
-    if (!patients.length) {
-      throw new HttpException('NO_PATIENTS_FOUND', HttpStatus.NOT_FOUND)
-    }
-
-    return patients
-  }
-
-  async findPatientsByName(name: string) {
-    if (!name) {
-      throw new HttpException(
-        'Name parameter is required',
-        HttpStatus.BAD_REQUEST,
-      )
-    }
-
-    const patients = await this.prismaService.patient.findMany({
-      where: {
-        name: {
-          contains: name,
-          mode: 'insensitive',
-        },
-      },
-      orderBy: { createdAt: 'desc' },
-      select: this.patientSelect,
-    })
-
-    if (!patients.length) {
-      throw new HttpException(
-        `PATIENT_NOT_FOUND_WITH_NAME: ${name}`,
-        HttpStatus.NOT_FOUND,
-      )
-    }
-
-    return patients
   }
 }

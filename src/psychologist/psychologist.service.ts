@@ -94,6 +94,12 @@ export class PsychologistService {
   async findByEmail(email: string) {
     const psychologist = await this.prismaService.psychologist.findFirst({
       where: { email },
+      select: {
+        id: true,
+        password: true,
+        name: true,
+        email: true,
+      },
     })
     if (!psychologist) {
       throw new HttpException('PSYCHOLOGIST_NOT_FOUND', HttpStatus.NOT_FOUND)
