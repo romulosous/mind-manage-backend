@@ -26,6 +26,7 @@ export function builderFilter(filter: SearchPatient): Prisma.PatientWhereInput {
     id,
     maxAge,
     minAge,
+    age,
   } = filter
 
   return {
@@ -45,5 +46,6 @@ export function builderFilter(filter: SearchPatient): Prisma.PatientWhereInput {
     ...(education && { education }),
     ...(minAge && { age: { gte: Number(minAge) } }),
     ...(maxAge && { age: { lte: Number(maxAge) } }),
+    ...(age && { age: Number(age) }),
   }
 }

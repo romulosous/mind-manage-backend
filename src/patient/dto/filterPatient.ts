@@ -11,6 +11,7 @@ type filterpatient = Pick<
   | 'createdAt'
   | 'name'
   | 'id'
+  | 'age'
 > & {
   offset?: number
   limit?: number
