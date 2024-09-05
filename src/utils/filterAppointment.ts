@@ -24,6 +24,9 @@ export function builderFilter(
     status,
     type,
     typeAcctivity,
+    gender,
+    minAge,
+    maxAge,
   } = filter
 
   return {
@@ -36,5 +39,14 @@ export function builderFilter(
     ...(status && { status }),
     ...(type && { type }),
     ...(typeAcctivity && { typeAcctivity }),
+    ...(gender !== undefined || minAge || maxAge
+      ? {
+          Patient: {
+            ...(gender !== undefined && { gender: gender as any }),
+            ...(minAge && { age: { gte: Number(minAge) } }),
+            ...(maxAge && { age: { lte: Number(maxAge) } }),
+          },
+        }
+      : {}),
   }
 }

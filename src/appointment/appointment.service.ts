@@ -1,5 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { PrismaClientValidationError } from '@prisma/client/runtime/library'
+import { SearchPatient } from 'src/patient/dto/filterPatient'
 import { PrismaService } from 'src/prisma.service'
 import { builderFilter } from 'src/utils/filterAppointment'
 
@@ -69,22 +70,32 @@ export class AppointmentService {
 
   async searchAppointment(filter: SearchAppointment) {
     const filters = builderFilter(filter)
-    const limit =
-      filter.limit && filter.limit > 0 && filter.limit <= 10 ? filter.limit : 10
 
     try {
-      const appointments = await this.prismaService.appointment.findMany({
-        where: filters,
-        orderBy: { createdAt: 'desc' },
-        skip: filter.offset ? Number(filter.offset) : 0,
-        take: Number(limit),
-      })
+      const [appointments, count] = await Promise.all([
+        this.prismaService.appointment.findMany({
+          where: filters,
+          include: {
+            Patient: {
+              select: {
+                age: true,
+                gender: true,
+                name: true,
+              },
+            },
+          },
+          orderBy: { createdAt: 'asc' },
+          skip: filter.offset ? Number(filter.offset) : 0,
+          take: Number(filter.limit) ? Number(filter.limit) : 10,
+        }),
+        this.prismaService.appointment.count({ where: filters }),
+      ])
 
       if (!appointments.length) {
         throw new HttpException('APPOINTMENTS_NOT_FOUND', HttpStatus.NOT_FOUND)
       }
 
-      return appointments
+      return { count, data: appointments }
     } catch (error) {
       if (error instanceof PrismaClientValidationError) {
         throw new HttpException('APPOINTMENTS_NOT_FOUND', HttpStatus.NOT_FOUND)

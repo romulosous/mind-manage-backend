@@ -12,6 +12,9 @@ type FilterAppointment = Pick<
 > & {
   offset?: number
   limit?: number
+  gender?: string
+  minAge?: number
+  maxAge?: number
 }
 
 export type SearchAppointment = FilterAppointment
