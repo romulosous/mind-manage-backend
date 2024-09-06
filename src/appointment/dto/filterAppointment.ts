@@ -15,6 +15,8 @@ type FilterAppointment = Pick<
   gender?: string
   minAge?: number
   maxAge?: number
+  minDate?: Date
+  maxDate?: Date
 }
 
 export type SearchAppointment = FilterAppointment

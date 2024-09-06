@@ -1,5 +1,6 @@
 import { $Enums, Session } from '@prisma/client'
 import {
+  IsDate,
   IsEnum,
   IsInt,
   IsNotEmpty,
@@ -52,11 +53,11 @@ export class CreateSessionDto implements Session {
   @IsNotEmpty()
   relationship: $Enums.Relationship
 
-  @IsString()
+  @IsDate()
   @IsOptional()
-  createdAt: string
+  createdAt: Date
 
-  @IsString()
+  @IsDate()
   @IsOptional()
-  updatedAt: string
+  updatedAt: Date
 }

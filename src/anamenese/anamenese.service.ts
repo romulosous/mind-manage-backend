@@ -1,7 +1,7 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
-import { PrismaService } from 'src/prisma.service'
 import { CreateAnameneseDto } from './dto/create-anamenese.dto'
 import { UpdateAnameneseDto } from './dto/update-anamenese.dto'
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
+import { PrismaService } from 'src/prisma.service'
 
 @Injectable()
 export class AnameneseService {
@@ -36,7 +36,6 @@ export class AnameneseService {
         .create({
           data: {
             ...createAnameneseDto,
-            createdAt: new Date().toLocaleString(),
             updatedAt: null,
           },
         })
@@ -72,7 +71,6 @@ export class AnameneseService {
       where: { id },
       data: {
         ...updateAnameneseDto,
-        updatedAt: new Date().toLocaleString(),
       },
     })
   }

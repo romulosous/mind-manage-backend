@@ -29,10 +29,10 @@ export class CreatePsychologistDto implements Psychologist {
   @IsString()
   @IsOptional()
   phone: string
-  @IsString()
+  @IsDate()
   @IsOptional()
-  createdAt: string
-  @IsString()
+  createdAt: Date
+  @IsDate()
   @IsOptional()
-  updatedAt: string
+  updatedAt: Date
 }

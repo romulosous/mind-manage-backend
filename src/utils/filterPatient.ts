@@ -1,18 +1,6 @@
 import { Prisma } from '@prisma/client'
 import { SearchPatient } from 'src/patient/dto/filterPatient'
 
-function createAtPacient(dateStr: string) {
-  const [day, month, year] = dateStr.split('/').map(Number)
-
-  const startOfDay = `${String(day).padStart(2, '0')}/${String(month).padStart(2, '0')}/${year}, 00:00:00`
-  const endOfDay = `${String(day).padStart(2, '0')}/${String(month).padStart(2, '0')}/${year}, 23:59:59`
-
-  return {
-    gte: startOfDay,
-    lte: endOfDay,
-  }
-}
-
 export function builderFilter(filter: SearchPatient): Prisma.PatientWhereInput {
   const {
     createdAt,
@@ -27,10 +15,23 @@ export function builderFilter(filter: SearchPatient): Prisma.PatientWhereInput {
     maxAge,
     minAge,
     age,
+    registration,
+    startDate,
+    endDate,
+    month,
+    year,
   } = filter
 
+  let startDateFilter: Date | undefined
+  let endDateFilter: Date | undefined
+
+  if (month && year) {
+    startDateFilter = new Date(year, month - 1, 1)
+    endDateFilter = new Date(year, month, 0, 23, 59, 59, 999)
+  }
+
   return {
-    ...(createdAt && { createdAt: createAtPacient(createdAt) }),
+    ...(createdAt && { createdAt: createdAt }),
     ...(isActive && { isActive: Boolean(isActive) }),
     ...(createdBy && { createdBy }),
     ...(course && { course }),
@@ -47,5 +48,20 @@ export function builderFilter(filter: SearchPatient): Prisma.PatientWhereInput {
     ...(minAge && { age: { gte: Number(minAge) } }),
     ...(maxAge && { age: { lte: Number(maxAge) } }),
     ...(age && { age: Number(age) }),
+    ...(registration && { registration }),
+    ...(startDate &&
+      endDate && {
+        createdAt: {
+          gte: startDate,
+          lte: endDate,
+        },
+      }),
+    ...(startDateFilter &&
+      endDateFilter && {
+        createdAt: {
+          gte: startDateFilter,
+          lte: endDateFilter,
+        },
+      }),
   }
 }

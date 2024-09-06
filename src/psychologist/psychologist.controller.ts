@@ -1,6 +1,3 @@
-import { CreatePsychologistDto } from './dto/create-psychologist.dto'
-import { UpdatePsychologistDto } from './dto/update-psychologist.dto'
-import { PsychologistService } from './psychologist.service'
 import {
   Body,
   Controller,
@@ -13,10 +10,16 @@ import {
   Put,
   UseGuards,
 } from '@nestjs/common'
+import { AuthType } from 'src/auth/enum'
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
+import { Roles } from 'src/auth/roles.decorator'
+
+import { CreatePsychologistDto } from './dto/create-psychologist.dto'
+import { UpdatePsychologistDto } from './dto/update-psychologist.dto'
+import { PsychologistService } from './psychologist.service'
 
 @Controller('psychologist')
-@UseGuards(JwtAuthGuard)
+// @UseGuards(JwtAuthGuard)
 export class PsychologistController {
   constructor(private readonly psychologistService: PsychologistService) {}
 
@@ -35,11 +38,13 @@ export class PsychologistController {
   }
 
   @Get(':id')
+  @Roles(AuthType.PSYCHOLOGIST, AuthType.ADMIN)
   async findOne(@Param('id', ParseIntPipe) id: number) {
     return await this.psychologistService.findOne(Number(id))
   }
 
   @Put(':id')
+  @Roles(AuthType.PSYCHOLOGIST, AuthType.ADMIN)
   async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updatePsychologistDto: UpdatePsychologistDto,
@@ -61,6 +66,7 @@ export class PsychologistController {
   }
 
   @Post('/email')
+  @Roles(AuthType.PSYCHOLOGIST, AuthType.ADMIN)
   async findByEmail(@Body('email') email: string) {
     return await this.psychologistService.findByEmail(email)
   }

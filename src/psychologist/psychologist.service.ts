@@ -33,11 +33,11 @@ export class PsychologistService {
 
   async create(createPsychologistDto: CreatePsychologistDto) {
     await this.checkPsychologistExists(createPsychologistDto.email)
+
     await this.prismaService.psychologist.create({
       data: {
         ...createPsychologistDto,
         password: hashSync(createPsychologistDto.password, 10),
-        createdAt: new Date().toLocaleString(),
         updatedAt: null,
       },
     })
@@ -74,7 +74,6 @@ export class PsychologistService {
       where: { id },
       data: {
         ...updatePsychologistDto,
-        updatedAt: new Date().toLocaleString(),
         password: hashSync(updatePsychologistDto.password, 10),
       },
     })

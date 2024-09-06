@@ -1,6 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { PrismaClientValidationError } from '@prisma/client/runtime/library'
-import { SearchPatient } from 'src/patient/dto/filterPatient'
 import { PrismaService } from 'src/prisma.service'
 import { builderFilter } from 'src/utils/filterAppointment'
 
@@ -54,7 +53,6 @@ export class AppointmentService {
         data: {
           ...createAppointmentDto,
           updatedAt: null,
-          createdAt: new Date().toLocaleString(),
           patientId:
             createAppointmentDto.type === 'SESSION'
               ? createAppointmentDto.patientId
@@ -116,7 +114,6 @@ export class AppointmentService {
         where: { id: Number(id) },
         data: {
           ...updateAppointmentDto,
-          updatedAt: new Date().toLocaleString(),
         },
       })
     } catch (error) {

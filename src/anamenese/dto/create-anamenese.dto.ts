@@ -1,5 +1,7 @@
 import { Anamenese } from '@prisma/client'
 import {
+  isDate,
+  IsDate,
   IsDateString,
   IsInt,
   IsNotEmpty,
@@ -36,11 +38,11 @@ export class CreateAnameneseDto implements Anamenese {
   @IsNotEmpty()
   acompaniment: string
 
-  @IsDateString()
+  @IsDate()
   @IsOptional()
-  createdAt: string
+  createdAt: Date
 
-  @IsDateString()
+  @IsDate()
   @IsOptional()
-  updatedAt: string
+  updatedAt: Date
 }

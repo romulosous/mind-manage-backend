@@ -12,11 +12,16 @@ type filterpatient = Pick<
   | 'name'
   | 'id'
   | 'age'
+  | 'registration'
 > & {
   offset?: number
   limit?: number
   minAge?: number
   maxAge?: number
+  startDate?: Date
+  endDate?: Date
+  month?: number
+  year?: number
 }
 
 export type SearchPatient = filterpatient

@@ -1,5 +1,6 @@
 import { $Enums, Appointment } from '@prisma/client'
 import {
+  IsDate,
   IsEnum,
   IsInt,
   IsNotEmpty,
@@ -31,19 +32,19 @@ export class CreateAppointmentDto implements Appointment {
   @IsInt()
   @IsOptional()
   patientId: number
-  @IsString()
+  @IsDate()
   @IsNotEmpty()
-  appointmentDate: string
+  appointmentDate: Date
   @IsEnum($Enums.Status)
   @IsOptional()
   status: $Enums.Status
   @IsString()
   @IsNotEmpty()
   reason: string
-  @IsString()
+  @IsDate()
   @IsOptional()
-  createdAt: string
-  @IsString()
+  createdAt: Date
+  @IsDate()
   @IsOptional()
-  updatedAt: string
+  updatedAt: Date
 }

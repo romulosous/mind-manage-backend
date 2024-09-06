@@ -1,11 +1,10 @@
+import { CreatePatientDto } from './dto/create-patient.dto'
+import { SearchPatient } from './dto/filterPatient'
+import { UpdatePatientDto } from './dto/update-patient.dto'
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { hashSync } from 'bcrypt'
 import { PrismaService } from 'src/prisma.service'
 import { builderFilter } from 'src/utils/filterPatient'
-
-import { CreatePatientDto } from './dto/create-patient.dto'
-import { SearchPatient } from './dto/filterPatient'
-import { UpdatePatientDto } from './dto/update-patient.dto'
 
 @Injectable()
 export class PatientService {
@@ -53,7 +52,6 @@ export class PatientService {
       data: {
         ...createPatientDto,
         password: hashSync(createPatientDto.password, 10),
-        createdAt: new Date().toLocaleString(),
         updatedAt: null,
       },
     })
@@ -72,11 +70,13 @@ export class PatientService {
       select: this.patientSelect,
     })
 
+    const count = await this.prismaService.patient.count({ where: filters })
+
     if (!patients.length) {
       throw new HttpException('PATIENTS_NOT_FOUND', HttpStatus.NOT_FOUND)
     }
 
-    return patients
+    return { count, data: patients }
   }
   async update(id: number, updatePatientDto: UpdatePatientDto) {
     await this.findPatientOrThrow(id)
@@ -84,7 +84,6 @@ export class PatientService {
       where: { id },
       data: {
         ...updatePatientDto,
-        updatedAt: new Date().toLocaleString(),
       },
     })
   }
@@ -99,18 +98,7 @@ export class PatientService {
   }
 
   async findByEmail(email: string) {
-    const patient = await this.prismaService.patient.findUnique({
-      where: { email },
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        password: true,
-      },
-    })
-    if (!patient) {
-      throw new HttpException('PATIENT_NOT_FOUND', HttpStatus.NOT_FOUND)
-    }
+    const patient = await this.checkPatientExists(email)
     return patient
   }
 }
