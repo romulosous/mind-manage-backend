@@ -21,9 +21,9 @@ export class CreateSessionDto implements Session {
   @IsNotEmpty()
   patientId: number
 
-  @IsString()
+  @IsDate()
   @IsNotEmpty()
-  sessionDate: string
+  sessionDate: Date
 
   @IsString()
   @IsOptional()

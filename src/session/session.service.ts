@@ -1,10 +1,9 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
-import { PrismaService } from 'src/prisma.service'
-import { builderFilter } from 'src/utils/filterSession'
-
 import { CreateSessionDto } from './dto/create-session.dto'
 import { SearchSession } from './dto/filterSession'
 import { UpdateSessionDto } from './dto/update-session.dto'
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
+import { PrismaService } from 'src/prisma.service'
+import { builderFilter } from 'src/utils/filterSession'
 
 @Injectable()
 export class SessionService {
@@ -32,10 +31,10 @@ export class SessionService {
   async create(createSessionDto: CreateSessionDto) {
     await this.checkSessionExists(
       createSessionDto.patientId,
-      createSessionDto.sessionDate,
+      createSessionDto.sessionDate.toISOString(),
     )
     await this.prismaService.session.create({
-      data: { ...createSessionDto, createdAt: new Date().toLocaleString() },
+      data: { ...createSessionDto, updatedAt: null },
     })
   }
 
@@ -46,6 +45,20 @@ export class SessionService {
 
     const sessions = await this.prismaService.session.findMany({
       where: filters,
+      include: {
+        psychologist: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        patient: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+      },
       orderBy: { createdAt: 'desc' },
       skip: filter.offset ? Number(filter.offset) : 0,
       take: Number(limit),
@@ -55,7 +68,7 @@ export class SessionService {
       throw new HttpException('SESSIONS_NOT_FOUND', HttpStatus.NOT_FOUND)
     }
 
-    return sessions
+    return { count: sessions.length, sessions }
   }
 
   async findAll() {
@@ -78,7 +91,7 @@ export class SessionService {
     await this.findSessionOrThrow(id)
     await this.prismaService.session.update({
       where: { id },
-      data: { ...updateSessionDto, updatedAt: new Date().toLocaleString() },
+      data: { ...updateSessionDto },
     })
   }
 
