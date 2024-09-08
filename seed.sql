@@ -10,351 +10,488 @@ INSERT INTO
         "phone",
         "gender",
         "patientType",
+        "attachment",
         "series",
         "createdAt",
         "updatedAt",
         "createdBy",
-        "isActive"
+        "isActive",
+        "difficulty"
     )
 VALUES (
-        'Alice Johnson',
-        'alice.johnson@example.com',
-        'hashed_password1',
-        '123456789',
+        'João Silva',
+        'joao.silva@example.com',
+        'senhaSegura123',
+        '20211001',
         'ADS',
         'SUPERIOR',
+        22,
+        '+55 11 91234-5678',
+        'MALE',
+        'STUDENT',
+        '{PEDAGOGICAL_REPORT}',
+        '1A',
+        '2023-09-01T08:00:00',
+        NULL,
+        'PSYCHOLOGIST',
+        TRUE,
+        '{AVALIATION, CONCENTRATION}'
+    ),
+    (
+        'Maria Oliveira',
+        'maria.oliveira@example.com',
+        'senhaSegura123',
+        '20211002',
+        'FISICA',
+        'SUPERIOR',
+        23,
+        '+55 11 91234-5679',
+        'FEMALE',
+        'STUDENT',
+        '{MEDICAL_REPORT}',
+        '2B',
+        '2023-09-02T08:00:00',
+        NULL,
+        'PSYCHOLOGIST',
+        TRUE,
+        '{MEMORY, ORGANIZATION_ON_STUDIES}'
+    ),
+    (
+        'Pedro Almeida',
+        'pedro.almeida@example.com',
+        'senhaSegura123',
+        '20211003',
+        'QUIMICA',
+        'MEDIO',
+        20,
+        '+55 11 91234-5680',
+        'MALE',
+        'STUDENT',
+        '{TEACHER_REPORT}',
+        '3C',
+        '2023-09-03T08:00:00',
+        NULL,
+        'PSYCHOLOGIST',
+        TRUE,
+        '{CONCENTRATION, TDAH}'
+    ),
+    (
+        'Ana Costa',
+        'ana.costa@example.com',
+        'senhaSegura123',
+        '20211004',
+        'ADMINISTRACAO',
+        'POS_GRADUACAO',
+        28,
+        '+55 11 91234-5681',
+        'FEMALE',
+        'CONTRACTOR',
+        '{PROFESSIONAL_REPORT}',
+        '4D',
+        '2023-09-04T08:00:00',
+        NULL,
+        'PSYCHOLOGIST',
+        TRUE,
+        '{RELATIONSHIP, COMUNICATION}'
+    ),
+    (
+        'Lucas Sousa',
+        'lucas.sousa@example.com',
+        'senhaSegura123',
+        '20211005',
+        'ELETROTECNICA',
+        'MESTRADO',
+        30,
+        '+55 11 91234-5682',
+        'MALE',
+        'TEACHER',
+        '{CORDENATION_REPORT}',
+        '5E',
+        '2023-09-05T08:00:00',
+        NULL,
+        'PSYCHOLOGIST',
+        TRUE,
+        '{ORGANIZATION_ON_STUDIES, AVALIATION}'
+    ),
+    (
+        'Bruna Pereira',
+        'bruna.pereira@example.com',
+        'senhaSegura123',
+        '20211006',
+        'ADS',
+        'SUPERIOR',
+        25,
+        '+55 11 91234-5683',
+        'FEMALE',
+        'STUDENT',
+        '{DIRECTION_REPORT}',
+        '6F',
+        '2023-09-06T08:00:00',
+        NULL,
+        'PSYCHOLOGIST',
+        TRUE,
+        '{MEMORY, AVALIATION}'
+    ),
+    (
+        'Carlos Lima',
+        'carlos.lima@example.com',
+        'senhaSegura123',
+        '20211007',
+        'INFORMATICA',
+        'SUPERIOR',
+        27,
+        '+55 11 91234-5684',
+        'MALE',
+        'CONTRACTOR',
+        '{ENAPI_REPORT}',
+        '7G',
+        '2023-09-07T08:00:00',
+        NULL,
+        'PSYCHOLOGIST',
+        TRUE,
+        '{TDAH, CONCENTRATION}'
+    ),
+    (
+        'Fernanda Ferreira',
+        'fernanda.ferreira@example.com',
+        'senhaSegura123',
+        '20211008',
+        'QUIMICA',
+        'SUPERIOR',
+        24,
+        '+55 11 91234-5685',
+        'FEMALE',
+        'STUDENT',
+        '{SPONTANEOUS_DECISION}',
+        '8H',
+        '2023-09-08T08:00:00',
+        NULL,
+        'PSYCHOLOGIST',
+        TRUE,
+        '{CONCENTRATION, ORGANIZATION_ON_STUDIES}'
+    ),
+    (
+        'Rafael Barbosa',
+        'rafael.barbosa@example.com',
+        'senhaSegura123',
+        '20211009',
+        'ADMINISTRACAO',
+        'SUPERIOR',
+        29,
+        '+55 11 91234-5686',
+        'MALE',
+        'STUDENT',
+        '{DIRECTION_EDUCATION_REPORT}',
+        '9I',
+        '2023-09-09T08:00:00',
+        NULL,
+        'PSYCHOLOGIST',
+        TRUE,
+        '{AVALIATION, RELATIONSHIP}'
+    ),
+    (
+        'Camila Gomes',
+        'camila.gomes@example.com',
+        'senhaSegura123',
+        '20211010',
+        'ELETROTECNICA',
+        'SUPERIOR',
+        26,
+        '+55 11 91234-5687',
+        'FEMALE',
+        'STUDENT',
+        '{OTHER}',
+        '10J',
+        '2023-09-10T08:00:00',
+        NULL,
+        'PSYCHOLOGIST',
+        TRUE,
+        '{COMUNICATION, AVALIATION}'
+    ),
+    (
+        'Felipe Rocha',
+        'felipe.rocha@example.com',
+        'senhaSegura123',
+        '20211011',
+        'ADS',
+        'POS_GRADUACAO',
+        32,
+        '+55 11 91234-5688',
+        'MALE',
+        'TEACHER',
+        '{MEDICAL_REPORT}',
+        '11K',
+        '2023-09-11T08:00:00',
+        NULL,
+        'PSYCHOLOGIST',
+        TRUE,
+        '{MEMORY, ORGANIZATION_ON_STUDIES}'
+    ),
+    (
+        'Gabriela Martins',
+        'gabriela.martins@example.com',
+        'senhaSegura123',
+        '20211012',
+        'QUIMICA',
+        'SUPERIOR',
+        24,
+        '+55 11 91234-5689',
+        'FEMALE',
+        'CONTRACTOR',
+        '{TEACHER_REPORT}',
+        '12L',
+        '2023-09-12T08:00:00',
+        NULL,
+        'PSYCHOLOGIST',
+        TRUE,
+        '{CONCENTRATION, RELATIONSHIP}'
+    ),
+    (
+        'Marcos Teixeira',
+        'marcos.teixeira@example.com',
+        'senhaSegura123',
+        '20211013',
+        'ADMINISTRACAO',
+        'MESTRADO',
+        33,
+        '+55 11 91234-5690',
+        'MALE',
+        'GUARDIAN',
+        '{PROFESSIONAL_REPORT}',
+        '13M',
+        '2023-09-13T08:00:00',
+        NULL,
+        'PSYCHOLOGIST',
+        TRUE,
+        '{TDAH, ORGANIZATION_ON_STUDIES}'
+    ),
+    (
+        'Juliana Ribeiro',
+        'juliana.ribeiro@example.com',
+        'senhaSegura123',
+        '20211014',
+        'INFORMATICA',
+        'SUPERIOR',
+        22,
+        '+55 11 91234-5691',
+        'FEMALE',
+        'STUDENT',
+        '{CORDENATION_REPORT}',
+        '14N',
+        '2023-09-14T08:00:00',
+        NULL,
+        'PSYCHOLOGIST',
+        TRUE,
+        '{CONCENTRATION, AVALIATION}'
+    ),
+    (
+        'Gustavo Nogueira',
+        'gustavo.nogueira@example.com',
+        'senhaSegura123',
+        '20211015',
+        'ADS',
+        'SUPERIOR',
+        24,
+        '+55 11 91234-5692',
+        'MALE',
+        'STUDENT',
+        '{ENAPI_REPORT}',
+        '15O',
+        '2023-09-15T08:00:00',
+        NULL,
+        'PSYCHOLOGIST',
+        TRUE,
+        '{MEMORY, RELATIONSHIP}'
+    ),
+    (
+        'Renata Melo',
+        'renata.melo@example.com',
+        'senhaSegura123',
+        '20211016',
+        'FISICA',
+        'SUPERIOR',
+        29,
+        '+55 11 91234-5693',
+        'FEMALE',
+        'TEACHER',
+        '{PEDAGOGICAL_REPORT}',
+        '16P',
+        '2023-09-16T08:00:00',
+        NULL,
+        'PSYCHOLOGIST',
+        TRUE,
+        '{ORGANIZATION_ON_STUDIES, AVALIATION}'
+    ),
+    (
+        'Thiago Costa',
+        'thiago.costa@example.com',
+        'senhaSegura123',
+        '20211017',
+        'QUIMICA',
+        'SUPERIOR',
+        27,
+        '+55 11 91234-5694',
+        'MALE',
+        'CONTRACTOR',
+        '{SPONTANEOUS_DECISION}',
+        '17Q',
+        '2023-09-17T08:00:00',
+        NULL,
+        'PSYCHOLOGIST',
+        TRUE,
+        '{CONCENTRATION, TDAH}'
+    ),
+    (
+        'Larissa Silva',
+        'larissa.silva@example.com',
+        'senhaSegura123',
+        '20211018',
+        'ELETROTECNICA',
+        'POS_GRADUACAO',
+        25,
+        '+55 11 91234-5695',
+        'FEMALE',
+        'STUDENT',
+        '{DIRECTION_REPORT}',
+        '18R',
+        '2023-09-18T08:00:00',
+        NULL,
+        'PSYCHOLOGIST',
+        TRUE,
+        '{AVALIATION, RELATIONSHIP}'
+    ),
+    (
+        'Rodrigo Lopes',
+        'rodrigo.lopes@example.com',
+        'senhaSegura123',
+        '20211019',
+        'ADMINISTRACAO',
+        'MESTRADO',
+        34,
+        '+55 11 91234-5696',
+        'MALE',
+        'TEACHER',
+        '{TEACHER_REPORT}',
+        '19S',
+        '2023-09-19T08:00:00',
+        NULL,
+        'PSYCHOLOGIST',
+        TRUE,
+        '{MEMORY, CONCENTRATION}'
+    ),
+    (
+        'Vanessa Pinto',
+        'vanessa.pinto@example.com',
+        'senhaSegura123',
+        '20211020',
+        'INFORMATICA',
+        'SUPERIOR',
+        30,
+        '+55 11 91234-5697',
+        'FEMALE',
+        'CONTRACTOR',
+        '{DIRECTION_EDUCATION_REPORT}',
+        '20T',
+        '2023-09-20T08:00:00',
+        NULL,
+        'PSYCHOLOGIST',
+        TRUE,
+        '{COMUNICATION, AVALIATION}'
+    ),
+    (
+        'Eduardo Santos',
+        'eduardo.santos@example.com',
+        'senhaSegura123',
+        '20211021',
+        'ELETROTECNICA',
+        'MEDIO',
         21,
-        '+5511999999991',
-        'FEMALE',
-        'STUDENT',
-        'Series A',
-        '2024-09-01 12:00:00',
-        '2024-09-01 12:00:00',
-        'PSYCHOLOGIST',
-        true
-    ),
-    (
-        'Bob Smith',
-        'bob.smith@example.com',
-        'hashed_password2',
-        '234567890',
-        'ADMINISTRACAO',
-        'MESTRADO',
-        22,
-        '+5511999999992',
+        '+55 11 91234-5698',
         'MALE',
-        'STUDENT',
-        'Series B',
-        '2024-09-01 12:00:00',
-        '2024-09-01 12:00:00',
-        'PSYCHOLOGIST',
-        true
-    ),
-    (
-        'Carol Williams',
-        'carol.williams@example.com',
-        'hashed_password3',
-        '345678901',
-        'FISICA',
-        'MEDIO',
-        23,
-        '+5511999999993',
-        'FEMALE',
-        'CONTRACTOR',
-        'Series C',
-        '2024-09-01 12:00:00',
-        '2024-09-01 12:00:00',
-        'PSYCHOLOGIST',
-        true
-    ),
-    (
-        'David Brown',
-        'david.brown@example.com',
-        'hashed_password4',
-        '456789012',
-        'QUIMICA',
-        'POS_GRADUACAO',
-        24,
-        '+5511999999994',
-        'MALE',
-        'TEACHER',
-        'Series D',
-        '2024-09-01 12:00:00',
-        '2024-09-01 12:00:00',
-        'PSYCHOLOGIST',
-        true
-    ),
-    (
-        'Eva Green',
-        'eva.green@example.com',
-        'hashed_password5',
-        '567890123',
-        'ELETROTECNICA',
-        'TECNICO',
-        25,
-        '+5511999999995',
-        'FEMALE',
         'GUARDIAN',
-        'Series E',
-        '2024-09-01 12:00:00',
-        '2024-09-01 12:00:00',
+        '{PROFESSIONAL_REPORT}',
+        '21U',
+        '2023-09-21T08:00:00',
+        NULL,
         'PSYCHOLOGIST',
-        true
+        TRUE,
+        '{CONCENTRATION, ORGANIZATION_ON_STUDIES}'
     ),
     (
-        'Frank White',
-        'frank.white@example.com',
-        'hashed_password6',
-        '678901234',
-        'INFORMATICA',
-        'SUPERIOR',
-        26,
-        '+5511999999996',
-        'MALE',
-        'STUDENT',
-        'Series F',
-        '2024-09-01 12:00:00',
-        '2024-09-01 12:00:00',
-        'PSYCHOLOGIST',
-        true
-    ),
-    (
-        'Grace Black',
-        'grace.black@example.com',
-        'hashed_password7',
-        '789012345',
-        'FISICA',
-        'POS_GRADUACAO',
-        27,
-        '+5511999999997',
-        'FEMALE',
-        'TEACHER',
-        'Series G',
-        '2024-09-01 12:00:00',
-        '2024-09-01 12:00:00',
-        'PSYCHOLOGIST',
-        true
-    ),
-    (
-        'Henry Red',
-        'henry.red@example.com',
-        'hashed_password8',
-        '890123456',
-        'QUIMICA',
-        'MESTRADO',
-        28,
-        '+5511999999998',
-        'MALE',
-        'CONTRACTOR',
-        'Series H',
-        '2024-09-01 12:00:00',
-        '2024-09-01 12:00:00',
-        'PSYCHOLOGIST',
-        true
-    ),
-    (
-        'Ivy Blue',
-        'ivy.blue@example.com',
-        'hashed_password9',
-        '901234567',
-        'ELETROTECNICA',
-        'TECNICO',
-        29,
-        '+5511999999999',
-        'FEMALE',
-        'GUARDIAN',
-        'Series I',
-        '2024-09-01 12:00:00',
-        '2024-09-01 12:00:00',
-        'PSYCHOLOGIST',
-        true
-    ),
-    (
-        'Jack Grey',
-        'jack.grey@example.com',
-        'hashed_password10',
-        '012345678',
-        'INFORMATICA',
-        'SUPERIOR',
-        30,
-        '+5511999999990',
-        'MALE',
-        'STUDENT',
-        'Series J',
-        '2024-09-01 12:00:00',
-        '2024-09-01 12:00:00',
-        'PSYCHOLOGIST',
-        true
-    ),
-    (
-        'Kelly Brown',
-        'kelly.brown@example.com',
-        'hashed_password11',
-        '987654321',
+        'Patricia Araújo',
+        'patricia.araujo@example.com',
+        'senhaSegura123',
+        '20211022',
         'ADS',
         'SUPERIOR',
-        22,
-        '+5511999999981',
-        'FEMALE',
-        'STUDENT',
-        'Series K',
-        '2024-09-01 12:00:00',
-        '2024-09-01 12:00:00',
-        'PSYCHOLOGIST',
-        true
-    ),
-    (
-        'Leo Green',
-        'leo.green@example.com',
-        'hashed_password12',
-        '876543210',
-        'ADMINISTRACAO',
-        'MESTRADO',
-        23,
-        '+5511999999982',
-        'MALE',
-        'STUDENT',
-        'Series L',
-        '2024-09-01 12:00:00',
-        '2024-09-01 12:00:00',
-        'PSYCHOLOGIST',
-        true
-    ),
-    (
-        'Mia Black',
-        'mia.black@example.com',
-        'hashed_password13',
-        '765432109',
-        'FISICA',
-        'MEDIO',
-        24,
-        '+5511999999983',
-        'FEMALE',
-        'CONTRACTOR',
-        'Series M',
-        '2024-09-01 12:00:00',
-        '2024-09-01 12:00:00',
-        'PSYCHOLOGIST',
-        true
-    ),
-    (
-        'Noah White',
-        'noah.white@example.com',
-        'hashed_password14',
-        '654321098',
-        'QUIMICA',
-        'POS_GRADUACAO',
-        25,
-        '+5511999999984',
-        'MALE',
-        'TEACHER',
-        'Series N',
-        '2024-09-01 12:00:00',
-        '2024-09-01 12:00:00',
-        'PSYCHOLOGIST',
-        true
-    ),
-    (
-        'Olivia Blue',
-        'olivia.blue@example.com',
-        'hashed_password15',
-        '543210987',
-        'ELETROTECNICA',
-        'TECNICO',
-        26,
-        '+5511999999985',
-        'FEMALE',
-        'GUARDIAN',
-        'Series O',
-        '2024-09-01 12:00:00',
-        '2024-09-01 12:00:00',
-        'PSYCHOLOGIST',
-        true
-    ),
-    (
-        'Paul Red',
-        'paul.red@example.com',
-        'hashed_password16',
-        '432109876',
-        'INFORMATICA',
-        'SUPERIOR',
         27,
-        '+5511999999986',
-        'MALE',
-        'STUDENT',
-        'Series P',
-        '2024-09-01 12:00:00',
-        '2024-09-01 12:00:00',
-        'PSYCHOLOGIST',
-        true
-    ),
-    (
-        'Quincy Grey',
-        'quincy.grey@example.com',
-        'hashed_password17',
-        '321098765',
-        'FISICA',
-        'POS_GRADUACAO',
-        28,
-        '+5511999999987',
+        '+55 11 91234-5699',
         'FEMALE',
-        'TEACHER',
-        'Series Q',
-        '2024-09-01 12:00:00',
-        '2024-09-01 12:00:00',
+        'STUDENT',
+        '{CORDENATION_REPORT}',
+        '22V',
+        '2023-09-22T08:00:00',
+        NULL,
         'PSYCHOLOGIST',
-        true
+        TRUE,
+        '{MEMORY, RELATIONSHIP}'
     ),
     (
-        'Rachel Brown',
-        'rachel.brown@example.com',
-        'hashed_password18',
-        '210987654',
-        'QUIMICA',
+        'Daniel Ramos',
+        'daniel.ramos@example.com',
+        'senhaSegura123',
+        '20211023',
+        'FISICA',
         'MESTRADO',
-        29,
-        '+5511999999988',
+        31,
+        '+55 11 91234-5700',
+        'MALE',
+        'TEACHER',
+        '{SPONTANEOUS_DECISION}',
+        '23W',
+        '2023-09-23T08:00:00',
+        NULL,
+        'PSYCHOLOGIST',
+        TRUE,
+        '{TDAH, AVALIATION}'
+    ),
+    (
+        'Mariana Farias',
+        'mariana.farias@example.com',
+        'senhaSegura123',
+        '20211024',
+        'QUIMICA',
+        'POS_GRADUACAO',
+        26,
+        '+55 11 91234-5701',
         'FEMALE',
         'CONTRACTOR',
-        'Series R',
-        '2024-09-01 12:00:00',
-        '2024-09-01 12:00:00',
+        '{OTHER}',
+        '24X',
+        '2023-09-24T08:00:00',
+        NULL,
         'PSYCHOLOGIST',
-        true
+        TRUE,
+        '{COMUNICATION, RELATIONSHIP}'
     ),
     (
-        'Steve Green',
-        'steve.green@example.com',
-        'hashed_password19',
-        '109876543',
-        'ELETROTECNICA',
-        'TECNICO',
-        30,
-        '+5511999999989',
+        'José Oliveira',
+        'jose.oliveira@example.com',
+        'senhaSegura123',
+        '20211025',
+        'ADMINISTRACAO',
+        'SUPERIOR',
+        33,
+        '+55 11 91234-5702',
         'MALE',
         'GUARDIAN',
-        'Series S',
-        '2024-09-01 12:00:00',
-        '2024-09-01 12:00:00',
+        '{MEDICAL_REPORT}',
+        '25Y',
+        '2023-09-25T08:00:00',
+        NULL,
         'PSYCHOLOGIST',
-        true
-    ),
-    (
-        'Tina White',
-        'tina.white@example.com',
-        'hashed_password20',
-        '098765432',
-        'INFORMATICA',
-        'SUPERIOR',
-        31,
-        '+5511999999990',
-        'FEMALE',
-        'STUDENT',
-        'Series T',
-        '2024-09-01 12:00:00',
-        '2024-09-01 12:00:00',
-        'PSYCHOLOGIST',
-        true
+        TRUE,
+        '{ORGANIZATION_ON_STUDIES, AVALIATION}'
     );
 
 INSERT INTO
@@ -369,54 +506,54 @@ INSERT INTO
         "updatedAt"
     )
 VALUES (
-        'Dr. Alice Martins',
-        'alice.martins@example.com',
-        'senhaSegura123',
-        '123456-SP',
-        'Terapia Cognitivo-Comportamental',
-        '11987654321',
-        '2024-09-02 14:00:00',
-        '2024-09-02 14:00:00'
-    ),
-    (
         'Dr. João Silva',
-        'joao.silva@example.com',
-        'senhaSegura456',
-        '654321-RJ',
-        'Psicanálise',
-        '21987654321',
-        '2024-09-02 14:00:00',
-        '2024-09-02 14:00:00'
+        'joao.silva@email.com',
+        'senha123',
+        '123456-CRP',
+        'Terapia Cognitiva',
+        '11987654321',
+        NOW(),
+        NULL
     ),
     (
         'Dra. Maria Oliveira',
-        'maria.oliveira@example.com',
-        'senhaSegura789',
-        '987654-MG',
-        'Terapia Familiar',
-        '31987654321',
-        '2024-09-02 14:00:00',
-        '2024-09-02 14:00:00'
-    ),
-    (
-        'Dr. Pedro Souza',
-        'pedro.souza@example.com',
-        'senhaSegura101',
-        '135792-BA',
+        'maria.oliveira@email.com',
+        'senha123',
+        '654321-CRP',
         'Psicologia Infantil',
-        '71987654321',
-        '2024-09-02 14:00:00',
-        '2024-09-02 14:00:00'
+        '11987654322',
+        NOW(),
+        NULL
     ),
     (
-        'Dra. Julia Costa',
-        'julia.costa@example.com',
-        'senhaSegura202',
-        '246813-SP',
+        'Dr. Pedro Almeida',
+        'pedro.almeida@email.com',
+        'senha123',
+        '987654-CRP',
+        'Psicoterapia',
+        '11987654323',
+        NOW(),
+        NULL
+    ),
+    (
+        'Dra. Ana Costa',
+        'ana.costa@email.com',
+        'senha123',
+        '456789-CRP',
+        'Psicanálise',
+        '11987654324',
+        NOW(),
+        NULL
+    ),
+    (
+        'Dr. Marcos Souza',
+        'marcos.souza@email.com',
+        'senha123',
+        '789123-CRP',
         'Neuropsicologia',
-        '11987654322',
-        '2024-09-02 14:00:00',
-        '2024-09-02 14:00:00'
+        '11987654325',
+        NOW(),
+        NULL
     );
 
 INSERT INTO
@@ -437,283 +574,491 @@ INSERT INTO
 VALUES (
         1,
         1,
-        '01/09/2024, 09:00:00',
+        '2024-09-05 10:00:00',
         'PENDING',
-        'Razão 1',
-        'Nome 1',
+        'Consulta de rotina',
+        'Consulta Individual',
         'GROUP',
         'SESSION',
-        'Observação 1',
-        'Objetivo 1',
-        '01/09/2024, 09:00:00',
-        NULL
-    ),
-    (
-        2,
-        2,
-        '02/09/2024, 10:00:00',
-        'CONFIRMED',
-        'Razão 2',
-        'Nome 2',
-        'LECTURE',
-        'COLLECTIVE_ACTIVITIES',
-        'Observação 2',
-        'Objetivo 2',
-        '02/09/2024, 10:00:00',
-        NULL
-    ),
-    (
-        3,
-        3,
-        '03/09/2024, 11:00:00',
-        'FINALIZED',
-        'Razão 3',
-        'Nome 3',
-        'SEMINAR',
-        'ADMINISTRATIVE_RECORDS',
-        'Observação 3',
-        'Objetivo 3',
-        '03/09/2024, 11:00:00',
-        NULL
-    ),
-    (
-        4,
-        4,
-        '04/09/2024, 12:00:00',
-        'CANCELED',
-        'Razão 4',
-        'Nome 4',
-        'MEETING',
-        'SESSION',
-        'Observação 4',
-        'Objetivo 4',
-        '04/09/2024, 12:00:00',
-        NULL
-    ),
-    (
-        5,
-        5,
-        '05/09/2024, 13:00:00',
-        'ABSENCE',
-        'Razão 5',
-        'Nome 5',
-        'DISCUSSION_CIRCLE',
-        'COLLECTIVE_ACTIVITIES',
-        'Observação 5',
-        'Objetivo 5',
-        '05/09/2024, 13:00:00',
-        NULL
+        'Paciente precisa de acompanhamento semanal',
+        'Melhorar desempenho acadêmico',
+        NOW(),
+        NOW()
     ),
     (
         1,
+        2,
+        '2024-09-06 11:00:00',
+        'CONFIRMED',
+        'Avaliação psicológica',
+        'Avaliação inicial',
+        'LECTURE',
+        'SESSION',
+        'Paciente relata estresse no trabalho',
+        'Reduzir estresse',
+        NOW(),
+        NOW()
+    ),
+    (
+        1,
+        3,
+        '2024-09-07 12:00:00',
+        'FINALIZED',
+        'Acompanhamento de tratamento',
+        'Sessão de acompanhamento',
+        'SEMINAR',
+        'COLLECTIVE_ACTIVITIES',
+        'Paciente apresentou melhoras',
+        'Continuar acompanhamento',
+        NOW(),
+        NOW()
+    ),
+    (
+        1,
+        4,
+        '2024-09-08 14:00:00',
+        'CANCELED',
+        'Reunião cancelada pelo paciente',
+        'Reunião cancelada',
+        'MEETING',
+        'ADMINISTRATIVE_RECORDS',
+        'Paciente não compareceu',
+        'Reagendar sessão',
+        NOW(),
+        NOW()
+    ),
+    (
+        1,
+        5,
+        '2024-09-09 15:00:00',
+        'ABSENCE',
+        'Paciente faltou à sessão',
+        'Falta',
+        'DISCUSSION_CIRCLE',
+        'SESSION',
+        'Paciente não justificou ausência',
+        'Agendar nova consulta',
+        NOW(),
+        NOW()
+    ),
+    -- Agendamentos para a Dra. Maria Oliveira (psychologistId = 2)
+    (
+        2,
         6,
-        '06/09/2024, 14:00:00',
-        'PENDING',
-        'Razão 6',
-        'Nome 6',
+        '2024-09-10 09:00:00',
+        'CONFIRMED',
+        'Consulta psicológica infantil',
+        'Consulta com criança',
         'GROUP',
         'SESSION',
-        'Observação 6',
-        'Objetivo 6',
-        '06/09/2024, 14:00:00',
-        NULL
+        'Paciente com dificuldades escolares',
+        'Melhorar desempenho escolar',
+        NOW(),
+        NOW()
     ),
     (
         2,
         7,
-        '07/09/2024, 15:00:00',
-        'CONFIRMED',
-        'Razão 7',
-        'Nome 7',
-        'LECTURE',
-        'COLLECTIVE_ACTIVITIES',
-        'Observação 7',
-        'Objetivo 7',
-        '07/09/2024, 15:00:00',
-        NULL
-    ),
-    (
-        3,
-        8,
-        '08/09/2024, 16:00:00',
+        '2024-09-11 10:00:00',
         'FINALIZED',
-        'Razão 8',
-        'Nome 8',
-        'SEMINAR',
-        'ADMINISTRATIVE_RECORDS',
-        'Observação 8',
-        'Objetivo 8',
-        '08/09/2024, 16:00:00',
-        NULL
-    ),
-    (
-        4,
-        9,
-        '09/09/2024, 17:00:00',
-        'CANCELED',
-        'Razão 9',
-        'Nome 9',
-        'MEETING',
+        'Acompanhamento psicológico infantil',
+        'Acompanhamento semanal',
+        'LECTURE',
         'SESSION',
-        'Observação 9',
-        'Objetivo 9',
-        '09/09/2024, 17:00:00',
-        NULL
-    ),
-    (
-        5,
-        10,
-        '10/09/2024, 18:00:00',
-        'ABSENCE',
-        'Razão 10',
-        'Nome 10',
-        'DISCUSSION_CIRCLE',
-        'COLLECTIVE_ACTIVITIES',
-        'Observação 10',
-        'Objetivo 10',
-        '10/09/2024, 18:00:00',
-        NULL
-    ),
-    (
-        1,
-        11,
-        '11/09/2024, 19:00:00',
-        'PENDING',
-        'Razão 11',
-        'Nome 11',
-        'GROUP',
-        'SESSION',
-        'Observação 11',
-        'Objetivo 11',
-        '11/09/2024, 19:00:00',
-        NULL
+        'Paciente apresentou pequenas melhoras',
+        'Apoio contínuo',
+        NOW(),
+        NOW()
     ),
     (
         2,
-        12,
-        '12/09/2024, 20:00:00',
-        'CONFIRMED',
-        'Razão 12',
-        'Nome 12',
-        'LECTURE',
+        8,
+        '2024-09-12 11:00:00',
+        'PENDING',
+        'Sessão de orientação',
+        'Consulta com pais',
+        'SEMINAR',
         'COLLECTIVE_ACTIVITIES',
-        'Observação 12',
-        'Objetivo 12',
-        '12/09/2024, 20:00:00',
-        NULL
+        'Discussão sobre comportamentos',
+        'Orientação familiar',
+        NOW(),
+        NOW()
+    ),
+    (
+        2,
+        9,
+        '2024-09-13 13:00:00',
+        'CONFIRMED',
+        'Sessão coletiva',
+        'Atividade em grupo',
+        'MEETING',
+        'ADMINISTRATIVE_RECORDS',
+        'Pacientes discutem experiências',
+        'Troca de experiências',
+        NOW(),
+        NOW()
+    ),
+    (
+        2,
+        10,
+        '2024-09-14 14:00:00',
+        'ABSENCE',
+        'Paciente não compareceu à consulta',
+        'Consulta agendada',
+        'DISCUSSION_CIRCLE',
+        'SESSION',
+        'Paciente não justificou ausência',
+        'Novo agendamento',
+        NOW(),
+        NOW()
+    ),
+    -- Agendamentos para o Dr. Pedro Almeida (psychologistId = 3)
+    (
+        3,
+        11,
+        '2024-09-15 09:30:00',
+        'FINALIZED',
+        'Avaliação inicial',
+        'Primeira consulta',
+        'GROUP',
+        'SESSION',
+        'Paciente com sintomas de ansiedade',
+        'Reduzir ansiedade',
+        NOW(),
+        NOW()
+    ),
+    (
+        3,
+        12,
+        '2024-09-16 10:30:00',
+        'PENDING',
+        'Sessão de terapia',
+        'Terapia individual',
+        'LECTURE',
+        'SESSION',
+        'Paciente precisa de acompanhamento',
+        'Controle da ansiedade',
+        NOW(),
+        NOW()
     ),
     (
         3,
         13,
-        '13/09/2024, 21:00:00',
-        'FINALIZED',
-        'Razão 13',
-        'Nome 13',
-        'SEMINAR',
-        'ADMINISTRATIVE_RECORDS',
-        'Observação 13',
-        'Objetivo 13',
-        '13/09/2024, 21:00:00',
-        NULL
-    ),
-    (
-        4,
-        14,
-        '14/09/2024, 22:00:00',
-        'CANCELED',
-        'Razão 14',
-        'Nome 14',
-        'MEETING',
-        'SESSION',
-        'Observação 14',
-        'Objetivo 14',
-        '14/09/2024, 22:00:00',
-        NULL
-    ),
-    (
-        5,
-        15,
-        '15/09/2024, 23:00:00',
-        'ABSENCE',
-        'Razão 15',
-        'Nome 15',
-        'DISCUSSION_CIRCLE',
-        'COLLECTIVE_ACTIVITIES',
-        'Observação 15',
-        'Objetivo 15',
-        '15/09/2024, 23:00:00',
-        NULL
-    ),
-    (
-        1,
-        16,
-        '16/09/2024, 09:30:00',
-        'PENDING',
-        'Razão 16',
-        'Nome 16',
-        'GROUP',
-        'SESSION',
-        'Observação 16',
-        'Objetivo 16',
-        '16/09/2024, 09:30:00',
-        NULL
-    ),
-    (
-        2,
-        17,
-        '17/09/2024, 10:30:00',
+        '2024-09-17 11:30:00',
         'CONFIRMED',
-        'Razão 17',
-        'Nome 17',
-        'LECTURE',
+        'Sessão de terapia',
+        'Sessão de acompanhamento',
+        'SEMINAR',
         'COLLECTIVE_ACTIVITIES',
-        'Observação 17',
-        'Objetivo 17',
-        '17/09/2024, 10:30:00',
-        NULL
+        'Paciente apresentou leve melhora',
+        'Monitorar progresso',
+        NOW(),
+        NOW()
     ),
     (
         3,
-        18,
-        '18/09/2024, 11:30:00',
-        'FINALIZED',
-        'Razão 18',
-        'Nome 18',
-        'SEMINAR',
+        14,
+        '2024-09-18 13:00:00',
+        'CANCELED',
+        'Reunião cancelada',
+        'Sessão cancelada',
+        'MEETING',
         'ADMINISTRATIVE_RECORDS',
-        'Observação 18',
-        'Objetivo 18',
-        '18/09/2024, 11:30:00',
-        NULL
+        'Reagendar',
+        'Novo agendamento',
+        NOW(),
+        NOW()
+    ),
+    (
+        3,
+        15,
+        '2024-09-19 14:00:00',
+        'ABSENCE',
+        'Falta à consulta',
+        'Consulta agendada',
+        'DISCUSSION_CIRCLE',
+        'SESSION',
+        'Paciente faltou',
+        'Novo agendamento',
+        NOW(),
+        NOW()
+    ),
+    -- Agendamentos para a Dra. Ana Costa (psychologistId = 4)
+    (
+        4,
+        16,
+        '2024-09-20 10:00:00',
+        'CONFIRMED',
+        'Sessão de psicoterapia',
+        'Acompanhamento semanal',
+        'GROUP',
+        'SESSION',
+        'Paciente em acompanhamento',
+        'Melhora contínua',
+        NOW(),
+        NOW()
+    ),
+    (
+        4,
+        17,
+        '2024-09-21 11:00:00',
+        'PENDING',
+        'Consulta agendada',
+        'Acompanhamento',
+        'LECTURE',
+        'SESSION',
+        'Paciente precisa de suporte emocional',
+        'Melhorar estado emocional',
+        NOW(),
+        NOW()
+    ),
+    (
+        4,
+        18,
+        '2024-09-22 12:00:00',
+        'CONFIRMED',
+        'Sessão coletiva',
+        'Sessão em grupo',
+        'SEMINAR',
+        'COLLECTIVE_ACTIVITIES',
+        'Discussão em grupo',
+        'Troca de experiências',
+        NOW(),
+        NOW()
     ),
     (
         4,
         19,
-        '19/09/2024, 12:30:00',
-        'CANCELED',
-        'Razão 19',
-        'Nome 19',
+        '2024-09-23 14:00:00',
+        'FINALIZED',
+        'Avaliação final',
+        'Conclusão de tratamento',
         'MEETING',
+        'ADMINISTRATIVE_RECORDS',
+        'Paciente finalizou acompanhamento',
+        'Encerramento',
+        NOW(),
+        NOW()
+    ),
+    (
+        4,
+        20,
+        '2024-09-24 15:00:00',
+        'CANCELED',
+        'Consulta cancelada',
+        'Consulta',
+        'DISCUSSION_CIRCLE',
         'SESSION',
-        'Observação 19',
-        'Objetivo 19',
-        '19/09/2024, 12:30:00',
-        NULL
+        'Paciente solicitou cancelamento',
+        'Reagendar',
+        NOW(),
+        NOW()
+    ),
+    -- Agendamentos para o Dr. Marcos Souza (psychologistId = 5)
+    (
+        5,
+        21,
+        '2024-09-25 09:00:00',
+        'FINALIZED',
+        'Sessão de acompanhamento',
+        'Acompanhamento',
+        'GROUP',
+        'SESSION',
+        'Paciente com sintomas de estresse',
+        'Reduzir estresse',
+        NOW(),
+        NOW()
     ),
     (
         5,
-        20,
-        '20/09/2024, 13:30:00',
-        'ABSENCE',
-        'Razão 20',
-        'Nome 20',
-        'DISCUSSION_CIRCLE',
+        22,
+        '2024-09-26 10:00:00',
+        'PENDING',
+        'Sessão de terapia',
+        'Sessão individual',
+        'LECTURE',
+        'SESSION',
+        'Paciente está em tratamento',
+        'Controle de estresse',
+        NOW(),
+        NOW()
+    ),
+    (
+        5,
+        23,
+        '2024-09-27 11:00:00',
+        'CONFIRMED',
+        'Sessão de acompanhamento',
+        'Acompanhamento psicológico',
+        'SEMINAR',
         'COLLECTIVE_ACTIVITIES',
-        'Observação 20',
-        'Objetivo 20',
-        '20/09/2024, 13:30:00',
-        NULL
+        'Paciente apresentou leve melhora',
+        'Apoio contínuo',
+        NOW(),
+        NOW()
+    ),
+    (
+        5,
+        24,
+        '2024-09-28 13:00:00',
+        'CANCELED',
+        'Consulta cancelada',
+        'Sessão cancelada',
+        'MEETING',
+        'ADMINISTRATIVE_RECORDS',
+        'Reagendar sessão',
+        'Novo agendamento',
+        NOW(),
+        NOW()
+    ),
+    (
+        5,
+        13,
+        '2024-09-29 14:00:00',
+        'ABSENCE',
+        'Falta à consulta',
+        'Consulta agendada',
+        'DISCUSSION_CIRCLE',
+        'SESSION',
+        'Paciente não justificou ausência',
+        'Reagendar sessão',
+        NOW(),
+        NOW()
     );
+
+UPDATE "Patient"
+SET
+    "attachment" = '{"PEDAGOGICAL_REPORT"}'
+WHERE
+    id = 1;
+
+UPDATE "Patient"
+SET
+    "attachment" = '{"MEDICAL_REPORT"}'
+WHERE
+    id = 2;
+
+UPDATE "Patient"
+SET
+    "attachment" = '{"TEACHER_REPORT"}'
+WHERE
+    id = 3;
+
+UPDATE "Patient"
+SET
+    "attachment" = '{"PROFESSIONAL_REPORT"}'
+WHERE
+    id = 4;
+
+UPDATE "Patient"
+SET
+    "attachment" = '{"CORDENATION_REPORT"}'
+WHERE
+    id = 5;
+
+UPDATE "Patient"
+SET
+    "attachment" = '{"DIRECTION_REPORT"}'
+WHERE
+    id = 6;
+
+UPDATE "Patient" SET "attachment" = '{"ENAPI_REPORT"}' WHERE id = 7;
+
+UPDATE "Patient"
+SET
+    "attachment" = '{"DIRECTION_EDUCATION_REPORT"}'
+WHERE
+    id = 8;
+
+UPDATE "Patient"
+SET
+    "attachment" = '{"SPONTANEOUS_DECISION"}'
+WHERE
+    id = 9;
+
+UPDATE "Patient" SET "attachment" = '{"OTHER"}' WHERE id = 10;
+
+UPDATE "Patient"
+SET
+    "attachment" = '{"PEDAGOGICAL_REPORT"}'
+WHERE
+    id = 11;
+
+UPDATE "Patient"
+SET
+    "attachment" = '{"MEDICAL_REPORT"}'
+WHERE
+    id = 12;
+
+UPDATE "Patient"
+SET
+    "attachment" = '{"TEACHER_REPORT"}'
+WHERE
+    id = 13;
+
+UPDATE "Patient"
+SET
+    "attachment" = '{"PROFESSIONAL_REPORT"}'
+WHERE
+    id = 14;
+
+UPDATE "Patient"
+SET
+    "attachment" = '{"CORDENATION_REPORT"}'
+WHERE
+    id = 15;
+
+UPDATE "Patient"
+SET
+    "attachment" = '{"DIRECTION_REPORT"}'
+WHERE
+    id = 16;
+
+UPDATE "Patient" SET "attachment" = '{"ENAPI_REPORT"}' WHERE id = 17;
+
+UPDATE "Patient"
+SET
+    "attachment" = '{"DIRECTION_EDUCATION_REPORT"}'
+WHERE
+    id = 18;
+
+UPDATE "Patient"
+SET
+    "attachment" = '{"SPONTANEOUS_DECISION"}'
+WHERE
+    id = 19;
+
+UPDATE "Patient" SET "attachment" = '{"OTHER"}' WHERE id = 20;
+
+UPDATE "Patient"
+SET
+    "attachment" = '{"PEDAGOGICAL_REPORT"}'
+WHERE
+    id = 21;
+
+UPDATE "Patient"
+SET
+    "attachment" = '{"MEDICAL_REPORT"}'
+WHERE
+    id = 22;
+
+UPDATE "Patient"
+SET
+    "attachment" = '{"TEACHER_REPORT"}'
+WHERE
+    id = 23;
+
+UPDATE "Patient"
+SET
+    "attachment" = '{"PROFESSIONAL_REPORT"}'
+WHERE
+    id = 24;
+
+UPDATE "Patient"
+SET
+    "attachment" = '{"CORDENATION_REPORT"}'
+WHERE
+    id = 25;
 
 INSERT INTO
     "Session" (
@@ -722,221 +1067,186 @@ INSERT INTO
         "sessionDate",
         "intervention",
         "referrals",
-        "attachment",
         "complaint",
-        "psychologicalDisorder",
-        "difficulty",
-        "relationship",
-        "createdAt",
-        "updatedAt"
+        "createdAt"
     )
 VALUES (
-        1,
-        1,
-        '01/09/2024, 09:00:00',
-        'Intervenção 1',
-        'Referências 1',
-        'Anexo 1',
-        'Queixa 1',
-        'DEPRESSION',
-        'AVALIATION',
-        'RELATIONSHIP_WITH_COLLEAGUES',
-        '01/09/2024, 09:00:00',
-        NULL
-    ),
-    (
         2,
-        2,
-        '02/09/2024, 10:00:00',
-        'Intervenção 2',
-        'Referências 2',
-        'Anexo 2',
-        'Queixa 2',
-        'GENERALIZED_ANXIETY',
-        'ORGANIZATION',
-        'RELATIONSHIP_WITH_FAMILY',
-        '02/09/2024, 10:00:00',
-        NULL
+        1,
+        '2024-09-01T10:00:00Z',
+        'Intervention 1',
+        'Referral 1',
+        'Complaint 1',
+        '2024-09-01T10:00:00Z'
     ),
     (
         3,
+        2,
+        '2024-09-02T10:00:00Z',
+        'Intervention 2',
+        'Referral 2',
+        'Complaint 2',
+        '2024-09-02T10:00:00Z'
+    ),
+    (
+        4,
         3,
-        '03/09/2024, 11:00:00',
-        'Intervenção 3',
-        'Referências 3',
-        'Anexo 3',
-        'Queixa 3',
-        'BIPOLAR_DISORDER',
-        'CONCENTRATION',
-        'RELATIONSHIP_WITH_PARTNER',
-        '03/09/2024, 11:00:00',
-        NULL
-    ),
-    (
-        4,
-        4,
-        '04/09/2024, 12:00:00',
-        'Intervenção 4',
-        'Referências 4',
-        'Anexo 4',
-        'Queixa 4',
-        'BORDERLINE_PERSONALITY_DISORDER',
-        'MEMORY',
-        'RELATIONSHIP_WITH_TEACHER',
-        '04/09/2024, 12:00:00',
-        NULL
+        '2024-09-03T10:00:00Z',
+        'Intervention 3',
+        'Referral 3',
+        'Complaint 3',
+        '2024-09-03T10:00:00Z'
     ),
     (
         5,
-        5,
-        '05/09/2024, 13:00:00',
-        'Intervenção 5',
-        'Referências 5',
-        'Anexo 5',
-        'Queixa 5',
-        'SCHIZOPHRENIA',
-        'TDAH',
-        'OTHER',
-        '05/09/2024, 13:00:00',
-        NULL
+        4,
+        '2024-09-04T10:00:00Z',
+        'Intervention 4',
+        'Referral 4',
+        'Complaint 4',
+        '2024-09-04T10:00:00Z'
     ),
     (
-        1,
+        2,
+        5,
+        '2024-09-05T10:00:00Z',
+        'Intervention 5',
+        'Referral 5',
+        'Complaint 5',
+        '2024-09-05T10:00:00Z'
+    ),
+    (
+        3,
         6,
-        '06/09/2024, 14:00:00',
-        'Intervenção 6',
-        'Referências 6',
-        'Anexo 6',
-        'Queixa 6',
-        'OBSESSIVE_COMPULSIVE_DISORDER',
-        'AVALIATION',
-        'RELATIONSHIP_WITH_COLLEAGUES',
-        '06/09/2024, 14:00:00',
-        NULL
+        '2024-09-06T10:00:00Z',
+        'Intervention 6',
+        'Referral 6',
+        'Complaint 6',
+        '2024-09-06T10:00:00Z'
     ),
     (
-        2,
+        4,
         7,
-        '07/09/2024, 15:00:00',
-        'Intervenção 7',
-        'Referências 7',
-        'Anexo 7',
-        'Queixa 7',
-        'POST_TRAUMATIC_STRESS_DISORDER',
-        'ORGANIZATION',
-        'RELATIONSHIP_WITH_FAMILY',
-        '07/09/2024, 15:00:00',
-        NULL
-    ),
-    (
-        3,
-        8,
-        '08/09/2024, 16:00:00',
-        'Intervenção 8',
-        'Referências 8',
-        'Anexo 8',
-        'Queixa 8',
-        'ATTENTION_DEFICIT_HYPERACTIVITY_DISORDER',
-        'CONCENTRATION',
-        'RELATIONSHIP_WITH_PARTNER',
-        '08/09/2024, 16:00:00',
-        NULL
-    ),
-    (
-        4,
-        9,
-        '09/09/2024, 17:00:00',
-        'Intervenção 9',
-        'Referências 9',
-        'Anexo 9',
-        'Queixa 9',
-        'AUTISM_SPECTRUM_DISORDER',
-        'MEMORY',
-        'RELATIONSHIP_WITH_TEACHER',
-        '09/09/2024, 17:00:00',
-        NULL
+        '2024-09-07T10:00:00Z',
+        'Intervention 7',
+        'Referral 7',
+        'Complaint 7',
+        '2024-09-07T10:00:00Z'
     ),
     (
         5,
-        10,
-        '10/09/2024, 18:00:00',
-        'Intervenção 10',
-        'Referências 10',
-        'Anexo 10',
-        'Queixa 10',
-        'EATING_DISORDER',
-        'TDAH',
-        'OTHER',
-        '10/09/2024, 18:00:00',
-        NULL
-    ),
-    (
-        1,
-        11,
-        '11/09/2024, 19:00:00',
-        'Intervenção 11',
-        'Referências 11',
-        'Anexo 11',
-        'Queixa 11',
-        'SUBSTANCE_ABUSE',
-        'AVALIATION',
-        'RELATIONSHIP_WITH_COLLEAGUES',
-        '11/09/2024, 19:00:00',
-        NULL
+        8,
+        '2024-09-08T10:00:00Z',
+        'Intervention 8',
+        'Referral 8',
+        'Complaint 8',
+        '2024-09-08T10:00:00Z'
     ),
     (
         2,
-        12,
-        '12/09/2024, 20:00:00',
-        'Intervenção 12',
-        'Referências 12',
-        'Anexo 12',
-        'Queixa 12',
-        'PERSONALITY_DISORDER',
-        'ORGANIZATION',
-        'RELATIONSHIP_WITH_FAMILY',
-        '12/09/2024, 20:00:00',
-        NULL
+        9,
+        '2024-09-09T10:00:00Z',
+        'Intervention 9',
+        'Referral 9',
+        'Complaint 9',
+        '2024-09-09T10:00:00Z'
     ),
     (
         3,
-        13,
-        '13/09/2024, 21:00:00',
-        'Intervenção 13',
-        'Referências 13',
-        'Anexo 13',
-        'Queixa 13',
-        'DISSOCIATIVE_DISORDER',
-        'CONCENTRATION',
-        'RELATIONSHIP_WITH_PARTNER',
-        '13/09/2024, 21:00:00',
-        NULL
+        10,
+        '2024-09-10T10:00:00Z',
+        'Intervention 10',
+        'Referral 10',
+        'Complaint 10',
+        '2024-09-10T10:00:00Z'
     ),
     (
         4,
-        14,
-        '14/09/2024, 22:00:00',
-        'Intervenção 14',
-        'Referências 14',
-        'Anexo 14',
-        'Queixa 14',
-        'BODY_DYSMORPHIC_DISORDER',
-        'MEMORY',
-        'RELATIONSHIP_WITH_TEACHER',
-        '14/09/2024, 22:00:00',
-        NULL
+        11,
+        '2024-09-11T10:00:00Z',
+        'Intervention 11',
+        'Referral 11',
+        'Complaint 11',
+        '2024-09-11T10:00:00Z'
     ),
     (
         5,
+        12,
+        '2024-09-12T10:00:00Z',
+        'Intervention 12',
+        'Referral 12',
+        'Complaint 12',
+        '2024-09-12T10:00:00Z'
+    ),
+    (
+        2,
+        13,
+        '2024-09-13T10:00:00Z',
+        'Intervention 13',
+        'Referral 13',
+        'Complaint 13',
+        '2024-09-13T10:00:00Z'
+    ),
+    (
+        3,
+        14,
+        '2024-09-14T10:00:00Z',
+        'Intervention 14',
+        'Referral 14',
+        'Complaint 14',
+        '2024-09-14T10:00:00Z'
+    ),
+    (
+        4,
         15,
-        '15/09/2024, 23:00:00',
-        'Intervenção 15',
-        'Referências 15',
-        'Anexo 15',
-        'Queixa 15',
-        'PARANOID_DISORDER',
-        'TDAH',
-        'OTHER',
-        '15/09/2024, 23:00:00',
-        NULL
+        '2024-09-15T10:00:00Z',
+        'Intervention 15',
+        'Referral 15',
+        'Complaint 15',
+        '2024-09-15T10:00:00Z'
+    ),
+    (
+        5,
+        16,
+        '2024-09-16T10:00:00Z',
+        'Intervention 16',
+        'Referral 16',
+        'Complaint 16',
+        '2024-09-16T10:00:00Z'
+    ),
+    (
+        2,
+        17,
+        '2024-09-17T10:00:00Z',
+        'Intervention 17',
+        'Referral 17',
+        'Complaint 17',
+        '2024-09-17T10:00:00Z'
+    ),
+    (
+        3,
+        18,
+        '2024-09-18T10:00:00Z',
+        'Intervention 18',
+        'Referral 18',
+        'Complaint 18',
+        '2024-09-18T10:00:00Z'
+    ),
+    (
+        4,
+        19,
+        '2024-09-19T10:00:00Z',
+        'Intervention 19',
+        'Referral 19',
+        'Complaint 19',
+        '2024-09-19T10:00:00Z'
+    ),
+    (
+        5,
+        20,
+        '2024-09-20T10:00:00Z',
+        'Intervention 20',
+        'Referral 20',
+        'Complaint 20',
+        '2024-09-20T10:00:00Z'
     );

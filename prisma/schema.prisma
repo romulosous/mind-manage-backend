@@ -36,6 +36,7 @@ model Patient {
   phone                 String
   gender                Gender
   patientType           PatientType
+  attachment            attachment[]
   series                String?
   createdAt             DateTime                @default(now())
   updatedAt             DateTime?               @updatedAt
@@ -43,6 +44,7 @@ model Patient {
   relationship          Relationship[]
   createdBy             CreatedBy               @default(PSYCHOLOGIST)
   isActive              Boolean?                @default(true)
+  difficulty            Difficulty[]
   Appointment           Appointment[]
   Session               Session[]
   Anamenese             Anamenese[]
@@ -50,6 +52,19 @@ model Patient {
   @@index([id])
   @@index([isActive])
   @@index([email])
+}
+
+enum attachment {
+  PEDAGOGICAL_REPORT
+  MEDICAL_REPORT
+  TEACHER_REPORT
+  PROFESSIONAL_REPORT
+  CORDENATION_REPORT
+  DIRECTION_REPORT
+  ENAPI_REPORT
+  DIRECTION_EDUCATION_REPORT
+  SPONTANEOUS_DECISION
+  OTHER
 }
 
 enum Gender {
@@ -60,6 +75,17 @@ enum Gender {
 enum CreatedBy {
   PATIENT
   PSYCHOLOGIST
+}
+
+enum Difficulty {
+  AVALIATION
+  ORGANIZATION_ON_STUDIES
+  CONCENTRATION
+  MEMORY
+  TDAH
+  COMUNICATION
+  RELATIONSHIP
+  OTHER
 }
 
 enum Education {
@@ -134,25 +160,14 @@ model Session {
   id             Int          @id @default(autoincrement())
   psychologistId Int
   patientId      Int
-  sessionDate    String
+  sessionDate    DateTime?
   intervention   String?
   referrals      String?
-  attachment     String?
   complaint      String?
-  difficulty     String?
   createdAt      DateTime     @default(now())
   updatedAt      DateTime?    @updatedAt
   psychologist   Psychologist @relation(fields: [psychologistId], references: [id])
   patient        Patient      @relation(fields: [patientId], references: [id])
-}
-
-enum Difficulty {
-  AVALIATION
-  ORGANIZATION
-  CONCENTRATION
-  MEMORY
-  TDAH
-  COMUNICATION
 }
 
 enum psychologicalDisorder {

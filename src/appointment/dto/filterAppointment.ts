@@ -1,4 +1,4 @@
-import { Appointment } from '@prisma/client'
+import { Appointment, attachment, Courses, Education, Gender, PatientType } from '@prisma/client'
 
 type FilterAppointment = Pick<
   Appointment,
@@ -9,14 +9,21 @@ type FilterAppointment = Pick<
   | 'patientId'
   | 'psychologistId'
   | 'name'
+  | 'createdAt'
 > & {
   offset?: number
   limit?: number
-  gender?: string
+  psychologistName?: string
+  gender?: Gender
   minAge?: number
   maxAge?: number
   minDate?: Date
   maxDate?: Date
+  course?: Courses
+  education?: Education
+  isActive?: boolean
+  attachment?: attachment
+  patientType?: PatientType
 }
 
 export type SearchAppointment = FilterAppointment

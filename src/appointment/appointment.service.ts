@@ -40,7 +40,7 @@ export class AppointmentService {
   }
 
   async create(createAppointmentDto: CreateAppointmentDto) {
-    const result = await this.prismaService.$transaction(async (prisma) => {
+    await this.prismaService.$transaction(async (prisma) => {
       if (
         createAppointmentDto.type !== 'ADMINISTRATIVE_RECORDS' &&
         createAppointmentDto.type !== 'COLLECTIVE_ACTIVITIES'
@@ -49,7 +49,7 @@ export class AppointmentService {
       }
       await this.checkPsychologistExists(createAppointmentDto.psychologistId)
 
-      const appointment = await prisma.appointment.create({
+      await prisma.appointment.create({
         data: {
           ...createAppointmentDto,
           updatedAt: null,
@@ -59,11 +59,7 @@ export class AppointmentService {
               : null,
         },
       })
-
-      return appointment
     })
-
-    return result
   }
 
   async searchAppointment(filter: SearchAppointment) {
@@ -76,8 +72,21 @@ export class AppointmentService {
           include: {
             Patient: {
               select: {
+                id: true,
+                name: true,
                 age: true,
                 gender: true,
+                isActive: true,
+                course: true,
+                education: true,
+                attachment: true,
+                patientType: true,
+              },
+            },
+            Psychologist: {
+              select: {
+                id: true,
+                specialty: true,
                 name: true,
               },
             },
