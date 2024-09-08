@@ -59,6 +59,9 @@ export class PatientService {
 
   async searchPatients(filter: SearchPatient) {
     const filters = builderFilter(filter)
+
+    console.log(filters)
+
     const limit =
       filter.limit && filter.limit > 0 && filter.limit <= 10 ? filter.limit : 10
 
@@ -70,13 +73,11 @@ export class PatientService {
       select: this.patientSelect,
     })
 
-    const count = await this.prismaService.patient.count({ where: filters })
-
     if (!patients.length) {
       throw new HttpException('PATIENTS_NOT_FOUND', HttpStatus.NOT_FOUND)
     }
 
-    return { count, data: patients }
+    return { count: patients.length, data: patients }
   }
   async update(id: number, updatePatientDto: UpdatePatientDto) {
     await this.findPatientOrThrow(id)

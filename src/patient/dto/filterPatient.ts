@@ -18,8 +18,8 @@ type filterpatient = Pick<
   limit?: number
   minAge?: number
   maxAge?: number
-  startDate?: Date
-  endDate?: Date
+  minDate?: Date
+  maxDate?: Date
   month?: number
   year?: number
 }

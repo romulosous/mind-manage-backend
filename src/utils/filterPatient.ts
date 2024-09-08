@@ -1,5 +1,6 @@
 import { Prisma } from '@prisma/client'
 import { SearchPatient } from 'src/patient/dto/filterPatient'
+import { dateFilter } from './dateFilter'
 
 export function builderFilter(filter: SearchPatient): Prisma.PatientWhereInput {
   const {
@@ -16,52 +17,65 @@ export function builderFilter(filter: SearchPatient): Prisma.PatientWhereInput {
     minAge,
     age,
     registration,
-    startDate,
-    endDate,
-    month,
-    year,
+    minDate,
+    maxDate,
   } = filter
 
-  let startDateFilter: Date | undefined
-  let endDateFilter: Date | undefined
+  let ageFilter = {}
 
-  if (month && year) {
-    startDateFilter = new Date(year, month - 1, 1)
-    endDateFilter = new Date(year, month, 0, 23, 59, 59, 999)
+  if (minAge !== undefined && !isNaN(Number(minAge))) {
+    ageFilter = {
+      ...ageFilter,
+      gte: Number(minAge),
+    }
   }
 
+  if (maxAge !== undefined && !isNaN(Number(maxAge))) {
+    ageFilter = {
+      ...ageFilter,
+      lte: Number(maxAge),
+    }
+  }
+
+  const dateFilterPatient = dateFilter(minDate, maxDate)
+
   return {
-    ...(createdAt && { createdAt: createdAt }),
-    ...(isActive && { isActive: Boolean(isActive) }),
-    ...(createdBy && { createdBy }),
-    ...(course && { course }),
-    ...(name && {
-      name: {
-        contains: name,
-        mode: 'insensitive',
-      },
-    }),
-    ...(id && { id: Number(id) }),
-    ...(gender && { gender }),
-    ...(patientType && { patientType }),
-    ...(education && { education }),
-    ...(minAge && { age: { gte: Number(minAge) } }),
-    ...(maxAge && { age: { lte: Number(maxAge) } }),
-    ...(age && { age: Number(age) }),
-    ...(registration && { registration }),
-    ...(startDate &&
-      endDate && {
-        createdAt: {
-          gte: startDate,
-          lte: endDate,
-        },
-      }),
-    ...(startDateFilter &&
-      endDateFilter && {
-        createdAt: {
-          gte: startDateFilter,
-          lte: endDateFilter,
-        },
-      }),
+    ...(isActive ||
+    createdBy ||
+    course ||
+    patientType ||
+    education ||
+    gender ||
+    name ||
+    id ||
+    age ||
+    registration ||
+    createdAt ||
+    minDate ||
+    maxDate ||
+    minAge ||
+    maxAge
+      ? {
+          ...(isActive && { isActive }),
+          ...(createdBy && { createdBy }),
+          ...(course && { course }),
+          ...(patientType && { patientType }),
+          ...(education && { education }),
+          ...(gender && { gender }),
+          ...(name && {
+            name: {
+              contains: name,
+            },
+          }),
+          ...(id && { id: Number(id) }),
+          ...(ageFilter && { age: ageFilter }),
+          ...(age && { age: Number(age) }),
+          ...(registration && { registration }),
+          ...(createdAt && { createdAt }),
+          ...(Object.keys(dateFilterPatient).length && {
+            createdAt: dateFilterPatient,
+          }),
+        }
+      : {}),
   }
 }

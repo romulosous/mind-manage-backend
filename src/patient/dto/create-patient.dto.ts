@@ -13,6 +13,18 @@ import {
 } from 'class-validator'
 
 export class CreatePatientDto implements Patient {
+  @IsEnum($Enums.Difficulty)
+  @IsOptional()
+  difficulty: $Enums.Difficulty[]
+  @IsEnum($Enums.attachment)
+  @IsOptional()
+  attachment: $Enums.attachment[]
+  @IsEnum($Enums.psychologicalDisorder)
+  @IsOptional()
+  psychologicalDisorder: $Enums.psychologicalDisorder[]
+  @IsOptional()
+  @IsEnum($Enums.Relationship)
+  relationship: $Enums.Relationship[]
   @IsInt()
   @IsOptional()
   id: number
