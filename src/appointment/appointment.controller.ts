@@ -23,9 +23,9 @@ export class AppointmentController {
     return await this.appointmentService.searchAppointment(filter)
   }
 
-  @Get(':id')
-  async findOne(@Param('id', ParseIntPipe) id: number) {
-    return await this.appointmentService.findOne(id)
+  @Get('report')
+  async report(@Query() filter: SearchAppointment) {
+    return await this.appointmentService.report(filter)
   }
 
   @Put(':id')

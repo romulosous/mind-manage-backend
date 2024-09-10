@@ -1,5 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { PrismaClientValidationError } from '@prisma/client/runtime/library'
+import { table } from 'console'
+import { Patient } from 'src/patient/entities/patient.entity'
 import { PrismaService } from 'src/prisma.service'
 import { builderFilter } from 'src/utils/filterAppointment'
 
@@ -139,5 +141,58 @@ export class AppointmentService {
     await this.prismaService.appointment.delete({
       where: { id: Number(id) },
     })
+  }
+
+  private async findAndAggregate(column: string, filters: any) {
+    const appointments = await this.prismaService.appointment.findMany({
+      where: filters,
+      include: {
+        Patient: true,
+      },
+    })
+
+    return this.aggregateByField(appointments, column)
+  }
+
+  private aggregateByField(data: any[], field: string) {
+    return data.reduce((acc, item) => {
+      const value = item[field] || item.Patient?.[field]
+      if (!value) return acc
+      acc[value] = (acc[value] || 0) + 1
+      return acc
+    }, {})
+  }
+
+  async report(filter: SearchAppointment) {
+    const filters = builderFilter(filter)
+
+    const columnsToAggregate = [
+      'status',
+      'typeAcctivity',
+      'type',
+      'gender',
+      'course',
+      'education',
+      'isActive',
+      'attachment',
+      'patientType',
+      'age',
+    ]
+
+    const aggregations = await Promise.all(
+      columnsToAggregate.map(async (col) => {
+        return {
+          col,
+          result: await this.findAndAggregate(col, filters),
+        }
+      }),
+    )
+
+    const reportData = {}
+    aggregations.forEach(({ col, result }) => {
+      reportData[col] = result
+    })
+
+    return reportData
   }
 }

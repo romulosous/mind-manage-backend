@@ -1,7 +1,8 @@
 import { Prisma } from '@prisma/client'
 import { SearchAppointment } from 'src/appointment/dto/filterAppointment'
-import { dateFilter } from './dateFilter'
+
 import { ageFilter } from './ageFilter'
+import { dateFilter } from './dateFilter'
 
 export function builderFilter(
   filter: SearchAppointment,
@@ -52,7 +53,6 @@ export function builderFilter(
           ...(Object.keys(appointmentDateFilter).length && {
             appointmentDate: appointmentDateFilter,
           }),
-          // ...(Object.keys(dateFilter).length && { createdAt: dateFilter }),
         }
       : {}),
     ...(gender ||
@@ -81,8 +81,8 @@ export function builderFilter(
             name: {
               contains: psychologistName,
             },
-            id: psychologistId ? Number(psychologistId) : undefined,
           },
+          psychologistId: psychologistId ? Number(psychologistId) : undefined,
         }
       : {}),
   }
