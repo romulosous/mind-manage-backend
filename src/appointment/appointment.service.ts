@@ -68,7 +68,7 @@ export class AppointmentService {
     const filters = builderFilter(filter)
 
     try {
-      const [appointments, count] = await Promise.all([
+      const [appointments] = await Promise.all([
         this.prismaService.appointment.findMany({
           where: filters,
           include: {
@@ -97,14 +97,13 @@ export class AppointmentService {
           skip: filter.offset ? Number(filter.offset) : 0,
           take: Number(filter.limit) ? Number(filter.limit) : 10,
         }),
-        this.prismaService.appointment.count({ where: filters }),
       ])
 
       if (!appointments.length) {
         throw new HttpException('APPOINTMENTS_NOT_FOUND', HttpStatus.NOT_FOUND)
       }
 
-      return { count, data: appointments }
+      return { count: appointments.length, data: appointments }
     } catch (error) {
       if (error instanceof PrismaClientValidationError) {
         throw new HttpException('APPOINTMENTS_NOT_FOUND', HttpStatus.NOT_FOUND)

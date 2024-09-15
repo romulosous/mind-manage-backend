@@ -9,10 +9,10 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('login')
-  async loginUser(@Body() loginDto: LoginDto, @Res() res: Response) {
+  async loginUser(@Body() { email, password }: LoginDto, @Res() res: Response) {
     const user = await this.authService.validateUser(
-      loginDto.email,
-      loginDto.password,
+      email,
+      password,
     )
 
     if (!user) {

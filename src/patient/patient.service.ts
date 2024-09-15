@@ -23,6 +23,13 @@ export class PatientService {
     createdAt: true,
     updatedAt: true,
     isActive: true,
+    createdBy: true,
+    education: true,
+    difficulty: true,
+    series: true,
+    attachment: true,
+    relationship: true,
+    psychologicalDisorder: true,
   }
 
   private async findPatientOrThrow(id: number) {
