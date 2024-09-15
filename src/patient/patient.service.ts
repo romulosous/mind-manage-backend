@@ -1,10 +1,11 @@
-import { CreatePatientDto } from './dto/create-patient.dto'
-import { SearchPatient } from './dto/filterPatient'
-import { UpdatePatientDto } from './dto/update-patient.dto'
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { hashSync } from 'bcrypt'
 import { PrismaService } from 'src/prisma.service'
 import { builderFilter } from 'src/utils/filterPatient'
+
+import { CreatePatientDto } from './dto/create-patient.dto'
+import { SearchPatient } from './dto/filterPatient'
+import { UpdatePatientDto } from './dto/update-patient.dto'
 
 @Injectable()
 export class PatientService {
@@ -106,7 +107,9 @@ export class PatientService {
   }
 
   async findByEmail(email: string) {
-    const patient = await this.checkPatientExists(email)
+    const patient = await this.prismaService.patient.findFirst({
+      where: { email },
+    })
     return patient
   }
 }

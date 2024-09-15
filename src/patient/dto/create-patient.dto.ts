@@ -1,6 +1,17 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { $Enums, Patient } from '@prisma/client'
-import { IsBoolean, IsDate, IsEmail, IsEnum, IsInt, IsNotEmpty, IsOptional, IsPhoneNumber, IsString, IsStrongPassword } from 'class-validator'
+import {
+  IsBoolean,
+  IsDate,
+  IsEmail,
+  IsEnum,
+  IsInt,
+  IsNotEmpty,
+  IsOptional,
+  IsPhoneNumber,
+  IsString,
+  IsStrongPassword,
+} from 'class-validator'
 
 export class CreatePatientDto implements Patient {
   @ApiProperty({
@@ -9,7 +20,7 @@ export class CreatePatientDto implements Patient {
     type: 'array',
     description: 'Pacient difficulty',
   })
-  @IsEnum($Enums.Difficulty)
+  @IsEnum($Enums.Difficulty, { each: true })
   @IsOptional()
   difficulty: $Enums.Difficulty[]
   @ApiProperty({
@@ -18,10 +29,10 @@ export class CreatePatientDto implements Patient {
     type: 'array',
     description: 'Attachment releaded to the patient',
   })
-  @IsEnum($Enums.attachment)
+  @IsEnum($Enums.attachment, { each: true })
   @IsOptional()
   attachment: $Enums.attachment[]
-  @IsEnum($Enums.psychologicalDisorder)
+  @IsEnum($Enums.psychologicalDisorder, { each: true })
   @IsOptional()
   @ApiProperty({
     enum: $Enums.psychologicalDisorder,
@@ -31,7 +42,7 @@ export class CreatePatientDto implements Patient {
   })
   psychologicalDisorder: $Enums.psychologicalDisorder[]
   @IsOptional()
-  @IsEnum($Enums.Relationship)
+  @IsEnum($Enums.Relationship, { each: true })
   @ApiProperty({
     enum: $Enums.Relationship,
     required: false,
@@ -88,7 +99,7 @@ export class CreatePatientDto implements Patient {
     description: 'Patient course',
   })
   course: $Enums.Courses
-  @IsEnum($Enums.Education)
+  @IsEnum($Enums.Education, { each: true })
   @IsOptional()
   @ApiProperty({
     enum: $Enums.Education,
@@ -113,7 +124,7 @@ export class CreatePatientDto implements Patient {
     description: 'Patient phone',
   })
   phone: string
-  @IsEnum($Enums.Gender)
+  @IsEnum($Enums.Gender, { each: true })
   @IsOptional()
   @ApiProperty({
     enum: $Enums.Gender,
@@ -122,7 +133,7 @@ export class CreatePatientDto implements Patient {
     description: 'Gender of the patient',
   })
   gender: $Enums.Gender
-  @IsEnum($Enums.PatientType)
+  @IsEnum($Enums.PatientType, { each: true })
   @IsOptional()
   @ApiProperty({
     enum: $Enums.PatientType,
