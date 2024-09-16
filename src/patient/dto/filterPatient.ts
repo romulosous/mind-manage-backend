@@ -35,6 +35,7 @@ type filterpatient = Pick<
   | 'id'
   | 'age'
   | 'registration'
+  | 'series'
 > & {
   series?: seriesOptions[]
   offset?: number

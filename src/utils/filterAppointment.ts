@@ -27,12 +27,14 @@ export function builderFilter(
     psychologistName,
     attachment,
     patientType,
+    patientName,
   } = filter
 
   const appointmentDateFilter = dateFilter(minDate, maxDate)
 
   return {
     ...(name ||
+    patientName ||
     patientId ||
     psychologistId ||
     status ||
@@ -43,7 +45,10 @@ export function builderFilter(
     maxDate ||
     minDate
       ? {
-          ...(name && { name }),
+          ...(name && { name: { contains: name, mode: 'insensitive' } }),
+          ...(patientName && {
+            Patient: { name: { contains: patientName, mode: 'insensitive' } },
+          }),
           ...(patientId && { patientId: Number(patientId) }),
           ...(psychologistId && { psychologistId: Number(psychologistId) }),
           ...(status && { status }),
