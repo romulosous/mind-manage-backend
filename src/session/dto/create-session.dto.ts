@@ -1,12 +1,5 @@
 import { $Enums, Session } from '@prisma/client'
-import {
-  IsDate,
-  IsEnum,
-  IsInt,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-} from 'class-validator'
+import { IsDate, IsEnum, IsInt, IsNotEmpty, IsOptional, IsString } from 'class-validator'
 
 export class CreateSessionDto implements Session {
   @IsInt()
@@ -41,7 +34,7 @@ export class CreateSessionDto implements Session {
   @IsNotEmpty()
   complaint: string
 
-  @IsEnum($Enums.psychologicalDisorder)
+  @IsEnum($Enums.psychologicalDisorder,{each:true})
   @IsNotEmpty()
   psychologicalDisorder: $Enums.psychologicalDisorder
 
@@ -49,7 +42,7 @@ export class CreateSessionDto implements Session {
   @IsOptional()
   difficulty: string
 
-  @IsEnum($Enums.Relationship)
+  @IsEnum($Enums.Relationship,{each:true})
   @IsNotEmpty()
   relationship: $Enums.Relationship
 

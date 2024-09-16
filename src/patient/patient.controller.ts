@@ -1,12 +1,15 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put, Query } from '@nestjs/common'
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
+import { AuthType } from 'src/auth/enum'
+import { Roles } from 'src/auth/roles.decorator'
 
-import { CreatePatientDto } from './dto/create-patient.dto';
-import { SearchPatient } from './dto/filterPatient';
-import { UpdatePatientDto } from './dto/update-patient.dto';
-import { PatientService } from './patient.service';
+import { CreatePatientDto } from './dto/create-patient.dto'
+import { SearchPatient } from './dto/filterPatient'
+import { UpdatePatientDto } from './dto/update-patient.dto'
+import { PatientService } from './patient.service'
 
 @Controller('patient')
+@Roles(AuthType.ADMIN, AuthType.PSYCHOLOGIST)
 @ApiTags('Patient')
 export class PatientController {
   constructor(private readonly patientService: PatientService) {}
@@ -25,11 +28,11 @@ export class PatientController {
   @ApiResponse({ status: 403, description: 'Forbidden' })
   @ApiResponse({ status: 500, description: 'Internal Server Error' })
   async create(@Body() createPatientDto: CreatePatientDto) {
-    await this.patientService.create(createPatientDto);
+    await this.patientService.create(createPatientDto)
     return {
       message: 'PATIENT_CREATED_SUCCESSFULLY',
       statusCode: HttpStatus.CREATED,
-    };
+    }
   }
 
   @Get()
@@ -46,13 +49,13 @@ export class PatientController {
   @ApiResponse({ status: 403, description: 'Forbidden' })
   @ApiResponse({ status: 500, description: 'Internal Server Error' })
   async search(@Query() filter: SearchPatient) {
-    return await this.patientService.searchPatients(filter);
+    return await this.patientService.searchPatients(filter)
   }
 
   @Put(':id')
   @ApiOperation({
     summary: 'Update a patient',
-    description: 'This endpoint is used to update a patient\'s information',
+    description: "This endpoint is used to update a patient's information",
   })
   @ApiResponse({
     status: 200,
@@ -67,11 +70,11 @@ export class PatientController {
     @Param('id', ParseIntPipe) id: number,
     @Body() updatePatientDto: UpdatePatientDto,
   ) {
-    await this.patientService.update(id, updatePatientDto);
+    await this.patientService.update(id, updatePatientDto)
     return {
       message: 'PATIENT_UPDATED_SUCCESSFULLY',
       statusCode: HttpStatus.OK,
-    };
+    }
   }
 
   @Delete(':id')
@@ -89,11 +92,11 @@ export class PatientController {
   @ApiResponse({ status: 404, description: 'Patient Not Found' })
   @ApiResponse({ status: 500, description: 'Internal Server Error' })
   async remove(@Param('id', ParseIntPipe) id: number) {
-    await this.patientService.remove(id);
+    await this.patientService.remove(id)
     return {
       message: 'PATIENT_DELETED_SUCCESSFULLY',
       statusCode: HttpStatus.OK,
-    };
+    }
   }
 
   @Post('email')
@@ -112,6 +115,6 @@ export class PatientController {
   @ApiResponse({ status: 404, description: 'Patient Not Found' })
   @ApiResponse({ status: 500, description: 'Internal Server Error' })
   async findByEmail(@Body() body: { email: string }) {
-    return await this.patientService.findByEmail(body.email);
+    return await this.patientService.findByEmail(body.email)
   }
 }

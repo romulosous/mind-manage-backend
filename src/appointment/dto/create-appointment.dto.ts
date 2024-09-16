@@ -1,21 +1,14 @@
 import { $Enums, Appointment } from '@prisma/client'
-import {
-  IsDate,
-  IsEnum,
-  IsInt,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-} from 'class-validator'
+import { IsDate, IsEnum, IsInt, IsNotEmpty, IsOptional, IsString } from 'class-validator'
 
 export class CreateAppointmentDto implements Appointment {
   @IsString()
   @IsNotEmpty()
   name: string
-  @IsEnum($Enums.typeAcctivity)
+  @IsEnum($Enums.typeAcctivity,{each:true})
   @IsOptional()
   typeAcctivity: $Enums.typeAcctivity
-  @IsEnum($Enums.typeAppointment)
+  @IsEnum($Enums.typeAppointment,{each:true})
   @IsOptional()
   type: $Enums.typeAppointment
   @IsString()
@@ -35,7 +28,7 @@ export class CreateAppointmentDto implements Appointment {
   @IsDate()
   @IsNotEmpty()
   appointmentDate: Date
-  @IsEnum($Enums.Status)
+  @IsEnum($Enums.Status,{each:true})
   @IsOptional()
   status: $Enums.Status
   @IsString()
