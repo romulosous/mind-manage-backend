@@ -1,5 +1,6 @@
 import { Prisma } from '@prisma/client'
 import { SearchPatient } from 'src/patient/dto/filterPatient'
+
 import { dateFilter } from './dateFilter'
 
 export function builderFilter(filter: SearchPatient): Prisma.PatientWhereInput {

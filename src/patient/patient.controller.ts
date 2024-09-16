@@ -1,6 +1,7 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put, Query } from '@nestjs/common'
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put, Query, UseGuards } from '@nestjs/common'
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { AuthType } from 'src/auth/enum'
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
 import { Roles } from 'src/auth/roles.decorator'
 
 import { CreatePatientDto } from './dto/create-patient.dto'
@@ -10,6 +11,7 @@ import { PatientService } from './patient.service'
 
 @Controller('patient')
 @Roles(AuthType.ADMIN, AuthType.PSYCHOLOGIST)
+@UseGuards(JwtAuthGuard)
 @ApiTags('Patient')
 export class PatientController {
   constructor(private readonly patientService: PatientService) {}

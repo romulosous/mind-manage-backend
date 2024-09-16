@@ -1,20 +1,12 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  HttpStatus,
-  Param,
-  ParseIntPipe,
-  Post,
-  Put,
-} from '@nestjs/common'
+import { Body, Controller, Delete, Get, HttpStatus, Param, ParseIntPipe, Post, Put, UseGuards } from '@nestjs/common'
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
 
 import { AnameneseService } from './anamenese.service'
 import { CreateAnameneseDto } from './dto/create-anamenese.dto'
 import { UpdateAnameneseDto } from './dto/update-anamenese.dto'
 
 @Controller('anamenese')
+@UseGuards(JwtAuthGuard)
 export class AnameneseController {
   constructor(private readonly anameneseService: AnameneseService) {}
 

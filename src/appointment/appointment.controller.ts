@@ -1,4 +1,5 @@
 import { Body, Controller, Delete, Get, HttpStatus, Param, ParseIntPipe, Post, Put, Query } from '@nestjs/common'
+import { AuthGuard } from '@nestjs/passport'
 import { AuthType } from 'src/auth/enum'
 import { Roles } from 'src/auth/roles.decorator'
 

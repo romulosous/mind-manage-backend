@@ -9,15 +9,18 @@ import {
   Post,
   Put,
   Query,
+  UseGuards,
 } from '@nestjs/common'
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
 
 import { CreateSessionDto } from './dto/create-session.dto'
 import { psychologicalDisorder } from './dto/Enum'
+import { SearchSession } from './dto/filterSession'
 import { UpdateSessionDto } from './dto/update-session.dto'
 import { SessionService } from './session.service'
-import { SearchSession } from './dto/filterSession'
 
 @Controller('session')
+@UseGuards(JwtAuthGuard)
 export class SessionController {
   constructor(private readonly sessionService: SessionService) {}
 

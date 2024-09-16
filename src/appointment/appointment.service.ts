@@ -93,7 +93,7 @@ export class AppointmentService {
           },
           orderBy: { createdAt: 'asc' },
           skip: filter.offset ? Number(filter.offset) : 0,
-          take: Number(filter.limit) ? Number(filter.limit) : 10,
+          take: Number(filter.limit),
         }),
         this.prismaService.appointment.count({ where: filters }),
       ])
