@@ -5,6 +5,7 @@ import { dateFilter } from './dateFilter'
 export function builderFilter(filter: SearchPatient): Prisma.PatientWhereInput {
   const {
     createdAt,
+    series,
     isActive,
     createdBy,
     course,
@@ -41,6 +42,7 @@ export function builderFilter(filter: SearchPatient): Prisma.PatientWhereInput {
 
   return {
     ...(isActive ||
+    series ||
     createdBy ||
     course ||
     patientType ||
@@ -65,6 +67,11 @@ export function builderFilter(filter: SearchPatient): Prisma.PatientWhereInput {
           ...(name && {
             name: {
               contains: name,
+            },
+          }),
+          ...(series && {
+            series: {
+              contains: series,
             },
           }),
           ...(id && { id: Number(id) }),
