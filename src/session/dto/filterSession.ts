@@ -10,6 +10,7 @@ type FilterSession = Pick<
   patientName?: string
   minDate?: Date
   maxDate?: Date
+  page?: number
 }
 
 export type SearchSession = FilterSession

@@ -11,7 +11,7 @@ import { PatientService } from './patient.service'
 
 @Controller('patient')
 @Roles(AuthType.ADMIN, AuthType.PSYCHOLOGIST)
-@UseGuards(JwtAuthGuard)
+// @UseGuards(JwtAuthGuard)
 @ApiTags('Patient')
 export class PatientController {
   constructor(private readonly patientService: PatientService) {}
@@ -51,6 +51,13 @@ export class PatientController {
   @ApiResponse({ status: 403, description: 'Forbidden' })
   @ApiResponse({ status: 500, description: 'Internal Server Error' })
   async search(@Query() filter: SearchPatient) {
+    const limit = 10
+    const courrentPage = filter.page || 1
+    const offset = (courrentPage - 1) * limit
+
+    filter.offset = offset
+    filter.limit = limit
+
     return await this.patientService.searchPatients(filter)
   }
 

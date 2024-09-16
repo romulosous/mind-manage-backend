@@ -1,11 +1,13 @@
 import { Module } from '@nestjs/common'
-import { AppointmentService } from './appointment.service'
-import { AppointmentController } from './appointment.controller'
+import { JwtService } from '@nestjs/jwt'
 import { PrismaService } from 'src/prisma.service'
+
+import { AppointmentController } from './appointment.controller'
+import { AppointmentService } from './appointment.service'
 
 @Module({
   controllers: [AppointmentController],
-  providers: [AppointmentService, PrismaService],
+  providers: [AppointmentService, PrismaService,JwtService],
   exports: [AppointmentModule],
 })
 export class AppointmentModule {}

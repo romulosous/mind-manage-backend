@@ -1,11 +1,4 @@
-import {
-  Appointment,
-  attachment,
-  Courses,
-  Education,
-  Gender,
-  PatientType,
-} from '@prisma/client'
+import { Appointment, attachment, Courses, Education, Gender, PatientType } from '@prisma/client'
 
 type FilterAppointment = Pick<
   Appointment,
@@ -18,6 +11,7 @@ type FilterAppointment = Pick<
   | 'name'
   | 'createdAt'
 > & {
+  page?: number
   patientName?: string
   offset?: number
   limit?: number

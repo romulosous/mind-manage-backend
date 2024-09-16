@@ -1,26 +1,13 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  HttpStatus,
-  Param,
-  ParseIntPipe,
-  Post,
-  Put,
-  Query,
-  UseGuards,
-} from '@nestjs/common'
+import { Body, Controller, Delete, Get, HttpStatus, Param, ParseIntPipe, Post, Put, Query, UseGuards } from '@nestjs/common'
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
 
 import { CreateSessionDto } from './dto/create-session.dto'
-import { psychologicalDisorder } from './dto/Enum'
 import { SearchSession } from './dto/filterSession'
 import { UpdateSessionDto } from './dto/update-session.dto'
 import { SessionService } from './session.service'
 
 @Controller('session')
-@UseGuards(JwtAuthGuard)
+// @UseGuards(JwtAuthGuard)
 export class SessionController {
   constructor(private readonly sessionService: SessionService) {}
 
@@ -35,6 +22,13 @@ export class SessionController {
 
   @Get()
   async getDisorders(@Query() filter: SearchSession) {
+    const limit = 10
+    const courrentPage = filter.page || 1
+    const offset = (courrentPage - 1) * limit
+
+    filter.offset = offset
+    filter.limit = limit
+
     return await this.sessionService.searchSession(filter)
   }
 

@@ -81,7 +81,11 @@ export class PatientService {
 
     const count = await this.prismaService.patient.count({ where: filters })
 
-    return { count, data: patients }
+    const totalPages = Math.ceil(count / Number(filter.limit) || 10)
+    const currentPage =
+      Math.floor((filter.offset || 0) / (filter.limit || 10)) + 1
+
+    return { count, totalPages, currentPage, data: patients }
   }
   async update(id: number, updatePatientDto: UpdatePatientDto) {
     await this.findPatientOrThrow(id)

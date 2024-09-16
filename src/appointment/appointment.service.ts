@@ -98,7 +98,11 @@ export class AppointmentService {
         this.prismaService.appointment.count({ where: filters }),
       ])
 
-      return { count, data: appointments }
+      const totalPages = Math.ceil(count / Number(filter.limit) || 10)
+      const currentPage =
+        Math.floor((filter.offset || 0) / (filter.limit || 10)) + 1
+
+      return { count, totalPages, currentPage, data: appointments }
     } catch (error) {
       if (error instanceof PrismaClientValidationError) {
         throw new HttpException('APPOINTMENTS_NOT_FOUND', HttpStatus.NOT_FOUND)

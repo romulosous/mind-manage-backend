@@ -46,6 +46,7 @@ type filterpatient = Pick<
   maxDate?: Date
   month?: number
   year?: number
+  page?: number
 }
 
 export type SearchPatient = filterpatient

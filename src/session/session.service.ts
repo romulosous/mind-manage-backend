@@ -1,9 +1,10 @@
-import { CreateSessionDto } from './dto/create-session.dto'
-import { SearchSession } from './dto/filterSession'
-import { UpdateSessionDto } from './dto/update-session.dto'
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { PrismaService } from 'src/prisma.service'
 import { builderFilter } from 'src/utils/filterSession'
+
+import { CreateSessionDto } from './dto/create-session.dto'
+import { SearchSession } from './dto/filterSession'
+import { UpdateSessionDto } from './dto/update-session.dto'
 
 @Injectable()
 export class SessionService {
@@ -64,11 +65,13 @@ export class SessionService {
       take: Number(limit),
     })
 
-    if (!sessions.length) {
-      throw new HttpException('SESSIONS_NOT_FOUND', HttpStatus.NOT_FOUND)
-    }
+    const count = await this.prismaService.session.count({ where: filters })
 
-    return { count: sessions.length, sessions }
+    const totalPages = Math.ceil(count / Number(filter.limit) || 10)
+      const currentPage =
+        Math.floor((filter.offset || 0) / (filter.limit || 10)) + 1
+
+    return { count,totalPages,currentPage, sessions }
   }
 
   async findAll() {

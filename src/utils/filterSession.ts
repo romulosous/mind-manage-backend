@@ -1,5 +1,6 @@
 import { Prisma } from '@prisma/client'
 import { SearchSession } from 'src/session/dto/filterSession'
+
 import { dateFilter } from './dateFilter'
 
 export function builderFilter(filter: SearchSession): Prisma.SessionWhereInput {
