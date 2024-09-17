@@ -39,7 +39,7 @@ export class AppointmentController {
   @Get()
   @Roles(AuthType.PSYCHOLOGIST, AuthType.PATIENT)
   async searchAppointment(@Query() filter: SearchAppointment) {
-    const limit = 10
+    const limit = filter.limit || 10
     const courrentPage = filter.page || 1
     const offset = (courrentPage - 1) * limit
 

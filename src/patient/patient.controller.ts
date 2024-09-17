@@ -1,4 +1,17 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put, Query, UseGuards } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  ParseIntPipe,
+  Post,
+  Put,
+  Query,
+  UseGuards,
+} from '@nestjs/common'
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { AuthType } from 'src/auth/enum'
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
@@ -51,7 +64,7 @@ export class PatientController {
   @ApiResponse({ status: 403, description: 'Forbidden' })
   @ApiResponse({ status: 500, description: 'Internal Server Error' })
   async search(@Query() filter: SearchPatient) {
-    const limit = 10
+    const limit = filter.limit || 10
     const courrentPage = filter.page || 1
     const offset = (courrentPage - 1) * limit
 
@@ -59,6 +72,13 @@ export class PatientController {
     filter.limit = limit
 
     return await this.patientService.searchPatients(filter)
+  }
+
+  @Get(':id')
+  @Roles(AuthType.PSYCHOLOGIST, AuthType.PATIENT)
+  async getById(@Param('id') id: string): Promise<any> {
+    const idNumber = parseInt(id)
+    return await this.patientService.findOne(idNumber)
   }
 
   @Put(':id')

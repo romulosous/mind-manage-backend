@@ -113,4 +113,7 @@ export class PatientService {
     })
     return patient
   }
+  async findOne(id: number) {
+    return await this.findPatientOrThrow(id)
+  }
 }
