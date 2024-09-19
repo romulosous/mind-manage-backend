@@ -81,6 +81,7 @@ export class AppointmentService {
                 education: true,
                 attachment: true,
                 patientType: true,
+                series: true,
               },
             },
             Psychologist: {

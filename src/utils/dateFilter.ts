@@ -6,7 +6,9 @@ export const dateFilter = (minDate?: Date, maxDate?: Date) => {
   }
 
   if (maxDate) {
-    filter['lte'] = new Date(maxDate)
+    const adjustedMaxDate = new Date(maxDate)
+    adjustedMaxDate.setDate(adjustedMaxDate.getDate() + 1)
+    filter['lte'] = adjustedMaxDate
   }
 
   return filter

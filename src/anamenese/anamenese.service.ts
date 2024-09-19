@@ -49,14 +49,22 @@ export class AnameneseService {
     return result
   }
 
-  async findAll() {
-    const anameneses = await this.prismaService.anamenese.findMany()
+  async findAll(filter: { limit: number; offset: number }) {
+    const limit =
+      filter.limit && filter.limit > 0 && filter.limit <= 10 ? filter.limit : 10
 
-    if (!anameneses.length) {
-      throw new HttpException('NO_ANAMENESES_FOUND', HttpStatus.NOT_FOUND)
-    }
+    const anameneses = await this.prismaService.anamenese.findMany({
+      orderBy: { createdAt: 'desc' },
+      skip: filter.offset ? Number(filter.offset) : 0,
+      take: Number(limit),
+    })
+    const count = await this.prismaService.anamenese.count({})
 
-    return anameneses
+    const totalPages = Math.ceil(count / Number(filter.limit) || 10)
+    const currentPage =
+      Math.floor((filter.offset || 0) / (filter.limit || 10)) + 1
+
+    return { count, totalPages, currentPage, data: anameneses }
   }
 
   async findOne(id: number) {

@@ -38,7 +38,11 @@ export class PatientService {
   private async findPatientOrThrow(id: number) {
     const patient = await this.prismaService.patient.findUnique({
       where: { id },
-      select: this.patientSelect,
+      // select: this.patientSelect,
+      include: {
+        Session: true,
+        Anamenese: true,
+      },
     })
     if (!patient) {
       throw new HttpException('PATIENT_NOT_FOUND', HttpStatus.NOT_FOUND)
