@@ -43,9 +43,66 @@ model Patient {
   createdBy             CreatedBy               @default(PSYCHOLOGIST)
   isActive              Boolean?                @default(true)
   difficulty            Difficulty[]
+  birth           DateTime?
+  Anamenese             Anamenese[]
   Appointment           Appointment[]
   Session               Session[]
-  Anamenese             Anamenese[]
+}
+
+model Appointment {
+  id              Int              @id @default(autoincrement())
+  psychologistId  Int
+  patientId       Int?
+  appointmentDate DateTime?
+  status          Status           @default(PENDING)
+  reason          String?
+  name            String?
+  typeAcctivity   typeAcctivity?
+  type            typeAppointment?
+  observation     String?
+  obejective      String?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime?        @updatedAt
+  Patient         Patient?         @relation(fields: [patientId], references: [id])
+  Psychologist    Psychologist     @relation(fields: [psychologistId], references: [id])
+  EmailSchedule   EmailSchedule[]
+}
+
+model Session {
+  id             Int          @id @default(autoincrement())
+  psychologistId Int
+  patientId      Int
+  intervention   String?
+  referrals      String?
+  complaint      String?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime?    @updatedAt
+  sessionDate    DateTime?
+  patient        Patient      @relation(fields: [patientId], references: [id])
+  psychologist   Psychologist @relation(fields: [psychologistId], references: [id])
+}
+
+model Anamenese {
+  id            Int       @id @default(autoincrement())
+  patientId     Int
+  familyHistory String?
+  infancy       String?
+  adolescence   String?
+  illnesses     String?
+  acompaniment  String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime? @updatedAt
+  Patient       Patient   @relation(fields: [patientId], references: [id])
+}
+
+model EmailSchedule {
+  id            Int          @id @default(autoincrement())
+  sendAt        DateTime
+  isSent        Boolean      @default(false)
+  appointmentId Int?
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime?    @updatedAt
+  Appointment   Appointment? @relation(fields: [appointmentId], references: [id])
 }
 
 enum attachment {
@@ -106,25 +163,6 @@ enum PatientType {
   TEACHER
 }
 
-model Appointment {
-  id              Int              @id @default(autoincrement())
-  psychologistId  Int
-  patientId       Int?
-  appointmentDate DateTime?
-  status          Status           @default(PENDING)
-  reason          String?
-  name            String?
-  typeAcctivity   typeAcctivity?
-  type            typeAppointment?
-  observation     String?
-  obejective      String?
-  createdAt       DateTime         @default(now())
-  updatedAt       DateTime?        @updatedAt
-  Psychologist    Psychologist     @relation(fields: [psychologistId], references: [id])
-  Patient         Patient?         @relation(fields: [patientId], references: [id])
-  EmailSchedule   EmailSchedule[]
-}
-
 enum typeAppointment {
   SESSION
   COLLECTIVE_ACTIVITIES
@@ -145,20 +183,6 @@ enum Status {
   FINALIZED
   CANCELED
   ABSENCE
-}
-
-model Session {
-  id             Int          @id @default(autoincrement())
-  psychologistId Int
-  patientId      Int
-  sessionDate    DateTime?
-  intervention   String?
-  referrals      String?
-  complaint      String?
-  createdAt      DateTime     @default(now())
-  updatedAt      DateTime?    @updatedAt
-  psychologist   Psychologist @relation(fields: [psychologistId], references: [id])
-  patient        Patient      @relation(fields: [patientId], references: [id])
 }
 
 enum psychologicalDisorder {
@@ -188,27 +212,4 @@ enum Relationship {
   RELATIONSHIP_WITH_PARTNER
   RELATIONSHIP_WITH_TEACHER
   OTHER
-}
-
-model Anamenese {
-  id            Int       @id @default(autoincrement())
-  patientId     Int
-  familyHistory String?
-  infancy       String?
-  adolescence   String?
-  illnesses     String?
-  acompaniment  String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime? @updatedAt
-  Patient       Patient   @relation(fields: [patientId], references: [id])
-}
-
-model EmailSchedule {
-  id            Int          @id @default(autoincrement())
-  sendAt        DateTime
-  isSent        Boolean      @default(false)
-  appointmentId Int?
-  Appointment   Appointment? @relation(fields: [appointmentId], references: [id])
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime?    @updatedAt
 }

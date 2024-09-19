@@ -124,6 +124,14 @@ export class CreatePatientDto implements Patient {
     description: 'Patient phone',
   })
   phone: string
+  @IsDate()
+  @IsOptional()
+  @ApiProperty({
+    type: 'date',
+    required: false,
+    description: 'Patient birth',
+  })
+  birth: Date
   @IsEnum($Enums.Gender, { each: true })
   @IsOptional()
   @ApiProperty({

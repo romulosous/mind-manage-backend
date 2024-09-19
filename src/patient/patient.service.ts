@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { hashSync } from 'bcrypt'
 import { PrismaService } from 'src/prisma.service'
 import { builderFilter } from 'src/utils/filterPatient'
+import { calculateAge } from 'src/utils/calculateAge'
 
 import { CreatePatientDto } from './dto/create-patient.dto'
 import { SearchPatient } from './dto/filterPatient'
@@ -19,6 +20,7 @@ export class PatientService {
     phone: true,
     course: true,
     registration: true,
+    birth: true,
     gender: true,
     patientType: true,
     createdAt: true,
@@ -55,11 +57,14 @@ export class PatientService {
 
   async create(createPatientDto: CreatePatientDto) {
     await this.checkPatientExists(createPatientDto.email)
+    const defaultPassword = createPatientDto.registration + '@123'
+    const age = calculateAge(createPatientDto.birth)
 
     await this.prismaService.patient.create({
       data: {
         ...createPatientDto,
-        password: hashSync(createPatientDto.password, 10),
+        age,
+        password: hashSync(defaultPassword, 10),
         updatedAt: null,
       },
     })
@@ -89,11 +94,12 @@ export class PatientService {
   }
   async update(id: number, updatePatientDto: UpdatePatientDto) {
     await this.findPatientOrThrow(id)
+    const age = calculateAge(updatePatientDto.birth)
     await this.prismaService.patient.update({
       where: { id },
       data: {
         ...updatePatientDto,
-        password: hashSync(updatePatientDto.password, 10),
+        age,
       },
     })
   }

@@ -33,7 +33,6 @@ export class PsychologistService {
 
   async create(createPsychologistDto: CreatePsychologistDto) {
     await this.checkPsychologistExists(createPsychologistDto.email)
-
     await this.prismaService.psychologist.create({
       data: {
         ...createPsychologistDto,
@@ -74,7 +73,7 @@ export class PsychologistService {
       where: { id },
       data: {
         ...updatePsychologistDto,
-        password: hashSync(updatePsychologistDto.password, 10),
+        // password: hashSync(updatePsychologistDto.password, 10),
       },
     })
   }
