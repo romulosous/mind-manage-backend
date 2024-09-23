@@ -11,7 +11,7 @@ export class EmailController {
     try {
       await this.emailService.checkAndSendEmails()
 
-      return {message: 'EMAILS_SEND_SUCCESSFULLY', statusCode: HttpStatus.OK}
+      return { message: 'EMAILS_SEND_SUCCESSFULLY', statusCode: HttpStatus.OK }
     } catch (error) {
       console.error('ERROR_SENDIG_EMAIL', error)
       throw new HttpException(

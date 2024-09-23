@@ -1,3 +1,6 @@
+import { AnameneseService } from './anamenese.service'
+import { CreateAnameneseDto } from './dto/create-anamenese.dto'
+import { UpdateAnameneseDto } from './dto/update-anamenese.dto'
 import {
   Body,
   Controller,
@@ -11,10 +14,6 @@ import {
   UseGuards,
 } from '@nestjs/common'
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
-
-import { AnameneseService } from './anamenese.service'
-import { CreateAnameneseDto } from './dto/create-anamenese.dto'
-import { UpdateAnameneseDto } from './dto/update-anamenese.dto'
 
 @Controller('anamenese')
 // @UseGuards(JwtAuthGuard)
