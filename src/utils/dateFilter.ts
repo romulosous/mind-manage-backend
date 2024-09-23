@@ -7,7 +7,8 @@ export const dateFilter = (minDate?: Date, maxDate?: Date) => {
 
   if (maxDate) {
     const adjustedMaxDate = new Date(maxDate)
-    adjustedMaxDate.setDate(adjustedMaxDate.getDate() + 1)
+    adjustedMaxDate.setUTCHours(23, 59, 0, 0)
+
     filter['lte'] = adjustedMaxDate
   }
 

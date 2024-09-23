@@ -40,6 +40,8 @@ export class AppointmentService {
   }
 
   async create(createAppointmentDto: CreateAppointmentDto) {
+    const psychologistId = createAppointmentDto.psychologistId || 6 //TODO
+    const status = createAppointmentDto.status || 'CONFIRMED'
     await this.prismaService.$transaction(async (prisma) => {
       if (
         createAppointmentDto.type !== 'ADMINISTRATIVE_RECORDS' &&
@@ -47,12 +49,14 @@ export class AppointmentService {
       ) {
         await this.checkPatientExists(createAppointmentDto.patientId)
       }
-      await this.checkPsychologistExists(createAppointmentDto.psychologistId)
+      await this.checkPsychologistExists(psychologistId)
 
       await prisma.appointment.create({
         data: {
           ...createAppointmentDto,
+          psychologistId,
           updatedAt: null,
+          status,
           patientId:
             createAppointmentDto.type === 'SESSION'
               ? createAppointmentDto.patientId
@@ -92,7 +96,7 @@ export class AppointmentService {
               },
             },
           },
-          orderBy: { createdAt: 'asc' },
+          orderBy: { appointmentDate: 'asc' },
           skip: filter.offset ? Number(filter.offset) : 0,
           take: Number(filter.limit),
         }),

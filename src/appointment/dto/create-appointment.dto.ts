@@ -1,14 +1,22 @@
 import { $Enums, Appointment } from '@prisma/client'
-import { IsDate, IsEnum, IsInt, IsNotEmpty, IsOptional, IsString } from 'class-validator'
+import {
+  IsDate,
+  IsEnum,
+  IsInt,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+} from 'class-validator'
 
 export class CreateAppointmentDto implements Appointment {
   @IsString()
-  @IsNotEmpty()
+  // @IsNotEmpty()
+  @IsOptional()
   name: string
-  @IsEnum($Enums.typeAcctivity,{each:true})
+  @IsEnum($Enums.typeAcctivity, { each: true })
   @IsOptional()
   typeAcctivity: $Enums.typeAcctivity
-  @IsEnum($Enums.typeAppointment,{each:true})
+  @IsEnum($Enums.typeAppointment, { each: true })
   @IsOptional()
   type: $Enums.typeAppointment
   @IsString()
@@ -19,8 +27,9 @@ export class CreateAppointmentDto implements Appointment {
   obejective: string
   @IsOptional()
   id: number
-  @IsNotEmpty()
-  @IsInt()
+  // @IsNotEmpty()
+  // @IsInt()
+  @IsOptional()
   psychologistId: number
   @IsInt()
   @IsOptional()
@@ -28,7 +37,7 @@ export class CreateAppointmentDto implements Appointment {
   @IsDate()
   @IsNotEmpty()
   appointmentDate: Date
-  @IsEnum($Enums.Status,{each:true})
+  @IsEnum($Enums.Status, { each: true })
   @IsOptional()
   status: $Enums.Status
   @IsString()
